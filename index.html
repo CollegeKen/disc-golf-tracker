@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f1a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DG Distance" />
+  <title>DG Distance</title>
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1a0f;
+      --surface: #162016;
+      --surface2: #1e2b1e;
+      --accent: #7fff5f;
+      --accent-dim: #4db83a;
+      --accent-glow: rgba(127, 255, 95, 0.15);
+      --red: #ff5f5f;
+      --red-dim: #b83a3a;
+      --red-glow: rgba(255, 95, 95, 0.15);
+      --text: #e8f5e8;
+      --text-muted: #6b8f6b;
+      --text-dim: #3d5c3d;
+      --border: rgba(127, 255, 95, 0.12);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      overscroll-behavior: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+
+    .header {
+      padding: 1.5rem 1.25rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .gps-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      flex-shrink: 0;
+    }
+    .dot.ready { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .dot.tracking { background: #ffcc00; box-shadow: 0 0 6px #ffcc00; animation: blink 1s infinite; }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric-box {
+      background: var(--bg);
+      padding: 1.25rem 1.25rem 1rem;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .metric-num.highlight { color: var(--accent); }
+
+    .metric-unit {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .controls {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1.1rem 1rem;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      border-radius: 6px;
+      border: 1px solid;
+      cursor: pointer;
+      transition: background 0.12s, transform 0.08s, box-shadow 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-start {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border-color: var(--accent-dim);
+    }
+    .btn-start:not(:disabled):hover { background: rgba(127,255,95,0.22); box-shadow: 0 0 20px var(--accent-glow); }
+
+    .btn-end {
+      background: var(--red-glow);
+      color: var(--red);
+      border-color: var(--red-dim);
+    }
+    .btn-end:not(:disabled):hover { background: rgba(255,95,95,0.22); box-shadow: 0 0 20px var(--red-glow); }
+
+    .btn:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+    }
+
+    .error-bar {
+      margin: 0 1.25rem;
+      padding: 10px 14px;
+      background: rgba(255,95,95,0.1);
+      border: 1px solid var(--red-dim);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--red);
+      display: none;
+    }
+
+    .history-section {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 1.25rem 2rem;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 0.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .history-header span {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .clear-btn {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+    .clear-btn:hover { color: var(--red); }
+
+    .throw-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      animation: slideIn 0.2s ease;
+    }
+
+    @keyframes slideIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: none; } }
+
+    .throw-feet {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .throw-ft-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-left: 4px;
+    }
+
+    .throw-meta {
+      text-align: right;
+    }
+
+    .throw-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .best-tag {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid rgba(127,255,95,0.25);
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-top: 3px;
+      display: inline-block;
+    }
+
+    .empty-state {
+      padding: 2rem 0;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>DG Distance</h1>
+    <div class="gps-status">
+      <div class="dot" id="dot"></div>
+      <span id="gps-label">acquiring gps</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-box">
+      <div class="metric-label">Last throw</div>
+      <div class="metric-num" id="last-num">—</div>
+      <div class="metric-unit">feet</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-label">Longest</div>
+      <div class="metric-num highlight" id="best-num">—</div>
+      <div class="metric-unit">feet</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-start" id="btn-start" disabled onclick="markStart()">Mark Throw Start</button>
+    <button class="btn btn-end" id="btn-end" disabled onclick="markEnd()">Mark Disc Landing</button>
+  </div>
+
+  <div class="error-bar" id="error-bar"></div>
+
+  <div class="history-section">
+    <div class="history-header">
+      <span>Throw history</span>
+      <button class="clear-btn" onclick="clearHistory()">Clear all</button>
+    </div>
+    <div id="history-list"></div>
+  </div>
+
+  <script>
+    let startCoords = null;
+    let currentPos = null;
+    let gpsReady = false;
+    let throws = [];
+
+    try { throws = JSON.parse(localStorage.getItem('dg_throws') || '[]'); } catch(e) { throws = []; }
+
+    function toRad(d) { return d * Math.PI / 180; }
+
+    function calcFeet(lat1, lon1, lat2, lon2) {
+      const R = 20902231;
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+      return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    }
+
+    function setGPS(mode) {
+      const dot = document.getElementById('dot');
+      const label = document.getElementById('gps-label');
+      dot.className = 'dot';
+      if (mode === 'ready') { dot.classList.add('ready'); label.textContent = 'gps ready'; }
+      else if (mode === 'tracking') { dot.classList.add('tracking'); label.textContent = 'start marked'; }
+      else { label.textContent = 'acquiring gps'; }
+    }
+
+    function showError(msg) {
+      const bar = document.getElementById('error-bar');
+      bar.textContent = msg;
+      bar.style.display = 'block';
+      setTimeout(() => bar.style.display = 'none', 5000);
+    }
+
+    function markStart() {
+      if (!currentPos) { showError('GPS not ready yet — try again in a moment.'); return; }
+      startCoords = { lat: currentPos.coords.latitude, lon: currentPos.coords.longitude };
+      setGPS('tracking');
+      document.getElementById('btn-start').disabled = true;
+      document.getElementById('btn-end').disabled = false;
+    }
+
+    function markEnd() {
+      if (!currentPos || !startCoords) return;
+      const feet = calcFeet(startCoords.lat, startCoords.lon, currentPos.coords.latitude, currentPos.coords.longitude);
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      throws.unshift({ feet, time });
+      try { localStorage.setItem('dg_throws', JSON.stringify(throws)); } catch(e) {}
+      startCoords = null;
+      renderUI();
+      setGPS('ready');
+      document.getElementById('btn-end').disabled = true;
+      document.getElementById('btn-start').disabled = false;
+    }
+
+    function clearHistory() {
+      throws = [];
+      try { localStorage.removeItem('dg_throws'); } catch(e) {}
+      renderUI();
+    }
+
+    function renderUI() {
+      const lastEl = document.getElementById('last-num');
+      const bestEl = document.getElementById('best-num');
+      const listEl = document.getElementById('history-list');
+
+      if (throws.length === 0) {
+        lastEl.textContent = '—';
+        bestEl.textContent = '—';
+        listEl.innerHTML = '<div class="empty-state">No throws recorded yet.</div>';
+        return;
+      }
+
+      const best = Math.max(...throws.map(t => t.feet));
+      lastEl.textContent = throws[0].feet.toLocaleString();
+      bestEl.textContent = best.toLocaleString();
+
+      listEl.innerHTML = throws.map(t => `
+        <div class="throw-row">
+          <div>
+            <span class="throw-feet">${t.feet.toLocaleString()}</span>
+            <span class="throw-ft-label">ft</span>
+          </div>
+          <div class="throw-meta">
+            <span class="throw-time">${t.time}</span>
+            ${t.feet === best ? '<span class="best-tag">best</span>' : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(
+        pos => {
+          currentPos = pos;
+          if (!gpsReady) {
+            gpsReady = true;
+            setGPS('ready');
+            document.getElementById('btn-start').disabled = false;
+          }
+        },
+        err => {
+          if (err.code === 1) showError('Location access denied. Enable location for this page in your browser settings.');
+          else showError('GPS error — make sure you\'re outdoors and reload.');
+        },
+        { enableHighAccuracy: true, maximumAge: 2000, timeout: 15000 }
+      );
+    } else {
+      showError('Your browser does not support geolocation.');
+    }
+
+    renderUI();
+  </script>
+</body>
+</html>
