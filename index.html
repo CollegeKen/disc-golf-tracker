@@ -29,7 +29,7 @@
     /* HEADER */
     .hdr { padding: 1.1rem 1.25rem 0.7rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; justify-content: space-between; flex-shrink: 0; }
     .hdr h1 { font-family: var(--font-d); font-size: 2rem; color: var(--accent); letter-spacing: 0.04em; line-height: 1; }
-    .hdr-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .hdr-sub { font-size: 13px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
     /* BUTTONS */
     .btn { font-family: var(--font-d); font-size: 1.5rem; letter-spacing: 0.08em; border-radius: 5px; border: 1px solid; cursor: pointer; transition: background 0.12s, transform 0.08s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; padding: 0.9rem 1rem; width: 100%; }
@@ -38,7 +38,7 @@
     .btn-red { background: var(--red-glow); color: var(--red); border-color: var(--red-dim); }
     .btn-ghost { background: transparent; color: var(--text-muted); border-color: var(--border); font-size: 1.1rem; padding: 0.7rem 1rem; }
     .btn:disabled { opacity: 0.28; cursor: not-allowed; }
-    .small-btn { font-family: var(--font-m); font-size: 11px; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; letter-spacing: 0.06em; -webkit-tap-highlight-color: transparent; }
+    .small-btn { font-family: var(--font-m); font-size: 13px; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; letter-spacing: 0.06em; -webkit-tap-highlight-color: transparent; }
     .small-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
     .small-btn.danger:hover { color: var(--red); border-color: var(--red-dim); }
 
@@ -46,17 +46,25 @@
     .scroll-body { flex: 1; overflow-y: auto; padding: 1.25rem; }
 
     /* ── SETUP ── */
-    .field-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .field-label { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
     .player-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .player-row input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: var(--font-m); font-size: 14px; padding: 10px 12px; outline: none; transition: border-color 0.15s; }
     .player-row input:focus { border-color: var(--accent-dim); }
     .player-row input::placeholder { color: var(--text-dim); }
     .remove-btn { background: none; border: none; color: var(--text-dim); font-size: 18px; cursor: pointer; padding: 4px 8px; }
     .remove-btn:hover { color: var(--red); }
-    .add-player-btn { background: none; border: 1px dashed var(--border); border-radius: 5px; color: var(--text-muted); font-family: var(--font-m); font-size: 12px; padding: 8px; cursor: pointer; width: 100%; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .add-player-btn { background: none; border: 1px dashed var(--border); border-radius: 5px; color: var(--text-muted); font-family: var(--font-m); font-size: 13px; padding: 8px; cursor: pointer; width: 100%; letter-spacing: 0.06em; margin-bottom: 8px; }
     .add-player-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
     .saved-player-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 5px 10px; font-size: 12px; color: var(--text-muted); cursor: pointer; margin: 0 4px 4px 0; -webkit-tap-highlight-color: transparent; }
     .saved-player-pill:hover { border-color: var(--accent-dim); color: var(--accent); }
+
+    /* COURSE SELECTOR */
+    .course-btn { display: block; width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: var(--font-m); font-size: 13px; padding: 11px 14px; cursor: pointer; text-align: left; margin-bottom: 6px; transition: border-color 0.15s, background 0.15s; -webkit-tap-highlight-color: transparent; }
+    .course-btn:hover { border-color: var(--accent-dim); }
+    .course-btn.selected { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
+    .course-btn .course-name { font-size: 14px; display: block; margin-bottom: 2px; }
+    .course-btn .course-meta { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; }
+    .course-btn.selected .course-meta { color: var(--accent-dim); }
 
     /* ── SCORING ── */
     .score-hdr { padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
@@ -79,6 +87,25 @@
     .score-disp.empty { color: var(--text-dim); }
     .score-lbl { font-size: 11px; color: var(--text-dim); text-align: center; letter-spacing: 0.08em; margin-top: 2px; }
     .score-footer { padding: 0.75rem 1.25rem; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+
+    /* NOTES BUTTON & STRIP */
+    .notes-strip { padding: 6px 1.25rem 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .notes-badge { flex: 1; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
+    .notes-badge.has-note { color: var(--yellow); }
+    .note-edit-btn { font-family: var(--font-m); font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
+    .note-edit-btn:hover { color: var(--yellow); border-color: var(--yellow-dim); }
+
+    /* NOTES MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: none; align-items: flex-end; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-sheet { background: var(--surface); border: 1px solid var(--border); border-bottom: none; border-radius: 12px 12px 0 0; width: 100%; max-width: 540px; padding: 1.25rem; display: flex; flex-direction: column; gap: 10px; animation: slideUp 0.2s ease; }
+    @keyframes slideUp { from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1} }
+    .modal-title { font-family: var(--font-d); font-size: 1.4rem; color: var(--accent); letter-spacing: 0.04em; }
+    .modal-subtitle { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; margin-top: -6px; }
+    .notes-textarea { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: var(--font-m); font-size: 14px; padding: 12px; outline: none; resize: none; height: 130px; width: 100%; transition: border-color 0.15s; line-height: 1.5; }
+    .notes-textarea:focus { border-color: var(--accent-dim); }
+    .notes-textarea::placeholder { color: var(--text-dim); }
+    .modal-actions { display: flex; gap: 8px; }
 
     /* ── TOTALS ── */
     .podium-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
@@ -142,13 +169,33 @@
 <div class="screen active" id="screen-setup">
   <div class="hdr"><h1>Next Best Throw</h1><span class="hdr-sub">New Round</span></div>
   <div class="scroll-body" style="display:flex;flex-direction:column;gap:1.25rem;">
+
+    <!-- COURSE -->
     <div>
-      <div class="field-label">Players (2–4)</div>
+      <div class="field-label">Course</div>
+      <button class="course-btn selected" id="course-0" onclick="selectCourse(0)">
+        <span class="course-name">Coachman Park</span>
+        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
+      </button>
+      <button class="course-btn" id="course-1" onclick="selectCourse(1)">
+        <span class="course-name">Cliff Stephens Park</span>
+        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
+      </button>
+      <button class="course-btn" id="course-2" onclick="selectCourse(2)">
+        <span class="course-name">Taylor Park</span>
+        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
+      </button>
+    </div>
+
+    <!-- PLAYERS -->
+    <div>
+      <div class="field-label">Players (1–4)</div>
       <div id="player-inputs"></div>
       <button class="add-player-btn" id="add-btn" onclick="addPlayerRow()">+ Add player</button>
       <div id="saved-pills-label" class="field-label" style="margin-top:12px;">Saved players — tap to add</div>
       <div id="saved-pills"></div>
     </div>
+
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;">
       <button class="btn btn-green" onclick="startRound()">Start Round</button>
       <button class="btn btn-ghost" onclick="showScreen('history')">View past rounds</button>
@@ -166,8 +213,14 @@
       <button class="nav-btn" onclick="chHole(1)">›</button>
     </div>
   </div>
-  <div style="padding:6px 1.25rem;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;flex-shrink:0;">PAR 3 · ALL HOLES</div>
+  <div style="padding:6px 1.25rem;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;flex-shrink:0;" id="course-lbl-scoring">PAR 3 · ALL HOLES</div>
+  <!-- NOTES STRIP -->
+  <div class="notes-strip">
+    <span class="notes-badge" id="notes-preview">no notes</span>
+    <button class="note-edit-btn" onclick="openNoteModal()">📝 Note</button>
+  </div>
   <div class="players-scroll" id="players-scroll"></div>
+  
   <div class="score-footer">
     <button class="btn btn-ghost" style="flex:1;" onclick="showScreen('setup')">Setup</button>
     <button class="btn btn-green" style="flex:2;" onclick="goTotals()">Finish Round</button>
@@ -239,6 +292,21 @@
   <div style="flex:1;overflow-y:auto;padding:0 1.25rem 1rem;" id="throw-list"></div>
 </div>
 
+<!-- ══ NOTES MODAL ══ -->
+<div class="modal-overlay" id="note-modal" onclick="handleModalBgClick(event)">
+  <div class="modal-sheet">
+    <div>
+      <div class="modal-title" id="modal-hole-title">Hole 1 — Note</div>
+      <div class="modal-subtitle" id="modal-course-subtitle">Coachman Park</div>
+    </div>
+    <textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Watch out for the big tree on the left. Aim for the basket's right side..."></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1;font-size:1rem;padding:0.75rem;" onclick="closeNoteModal()">Cancel</button>
+      <button class="btn btn-green" style="flex:2;font-size:1rem;padding:0.75rem;" onclick="saveNote()">Save Note</button>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <button class="nav-item active" id="nav-setup" onclick="showScreen('setup')"><span class="nav-icon">🏁</span><span class="nav-lbl">Setup</span></button>
@@ -253,12 +321,20 @@ const PAR = 3;
 const HOLES = 18;
 const TOTAL_PAR = PAR * HOLES;
 
+const COURSES = [
+  { name: 'Coachman Park',      holes: 18, par: 3 },
+  { name: 'Cliff Stephens Park', holes: 18, par: 3 },
+  { name: 'Taylor Park',        holes: 18, par: 3 },
+];
+
 // ── STATE ──
-let activePlayers = [];   // [{name}] for current round
-let scores = [];          // scores[playerIdx][holeIdx] = number|null
+let activePlayers = [];
+let scores = [];
+let holeNotes = new Array(HOLES).fill(''); // notes[holeIdx]
 let currentHole = 0;
+let selectedCourse = 0;
 let savedRounds = [];
-let knownPlayers = [];    // [{name, rounds, totalScore}]
+let knownPlayers = [];
 let throws = [];
 let startCoords = null;
 let currentPos = null;
@@ -291,18 +367,26 @@ function showScreen(id) {
   if (id === 'distance') renderThrows();
 }
 
+// ── COURSE SELECTION ──
+function selectCourse(idx) {
+  selectedCourse = idx;
+  document.querySelectorAll('.course-btn').forEach((b, i) => {
+    b.classList.toggle('selected', i === idx);
+  });
+}
+
 // ── SETUP ──
 function renderSetup() {
   const container = document.getElementById('player-inputs');
   container.innerHTML = '';
-  if (activePlayers.length === 0) activePlayers = [{name:''},{name:''}];
+  if (activePlayers.length === 0) activePlayers = [{name:''}];
   activePlayers.forEach((p, i) => {
     const row = document.createElement('div');
     row.className = 'player-row';
     row.innerHTML = `
       <input type="text" placeholder="Player ${i+1}" value="${p.name}" maxlength="16"
         oninput="activePlayers[${i}].name=this.value" />
-      ${activePlayers.length > 2 ? `<button class="remove-btn" onclick="removePlayerRow(${i})">✕</button>` : ''}
+      ${activePlayers.length > 1 ? `<button class="remove-btn" onclick="removePlayerRow(${i})">✕</button>` : ''}
     `;
     container.appendChild(row);
   });
@@ -341,6 +425,7 @@ function startRound() {
   const names = activePlayers.map((p, i) => p.name.trim() || `Player ${i+1}`);
   activePlayers = names.map(n => ({name: n}));
   scores = activePlayers.map(() => new Array(HOLES).fill(null));
+  holeNotes = new Array(HOLES).fill('');
   currentHole = 0;
   renderScoring();
   showScreen('scoring');
@@ -348,8 +433,22 @@ function startRound() {
 
 // ── SCORING ──
 function renderScoring() {
+  const course = COURSES[selectedCourse];
   document.getElementById('hole-lbl').textContent = `Hole ${currentHole + 1}`;
   document.getElementById('hole-prog').textContent = `${currentHole + 1}/${HOLES}`;
+  document.getElementById('course-lbl-scoring').textContent = `${course.name} · Par 3 · All Holes`;
+
+  // Notes preview strip
+  const note = holeNotes[currentHole] || '';
+  const preview = document.getElementById('notes-preview');
+  if (note.trim()) {
+    preview.textContent = note.trim();
+    preview.className = 'notes-badge has-note';
+  } else {
+    preview.textContent = 'no notes';
+    preview.className = 'notes-badge';
+  }
+
   const container = document.getElementById('players-scroll');
   container.innerHTML = '';
   activePlayers.forEach((p, pi) => {
@@ -404,18 +503,45 @@ function chHole(delta) {
   renderScoring();
 }
 
+// ── NOTES MODAL ──
+function openNoteModal() {
+  const course = COURSES[selectedCourse];
+  document.getElementById('modal-hole-title').textContent = `Hole ${currentHole + 1} — Note`;
+  document.getElementById('modal-course-subtitle').textContent = course.name;
+  document.getElementById('note-textarea').value = holeNotes[currentHole] || '';
+  document.getElementById('note-modal').classList.add('open');
+  setTimeout(() => document.getElementById('note-textarea').focus(), 200);
+}
+
+function closeNoteModal() {
+  document.getElementById('note-modal').classList.remove('open');
+}
+
+function saveNote() {
+  holeNotes[currentHole] = document.getElementById('note-textarea').value.trim();
+  closeNoteModal();
+  renderScoring();
+}
+
+function handleModalBgClick(e) {
+  if (e.target === document.getElementById('note-modal')) closeNoteModal();
+}
+
 // ── TOTALS ──
 function goTotals() { renderTotals(null); showScreen('totals'); }
 
 function renderTotals(round) {
-  const r = round || {players: activePlayers, scores, date:'', time:''};
+  const r = round || {players: activePlayers, scores, notes: holeNotes, course: COURSES[selectedCourse].name, date:'', time:''};
   const container = document.getElementById('totals-body');
   const ranked = r.players.map((p,i) => {
     const total = r.scores[i].reduce((s,v) => s+(v||0), 0);
     return {name: p.name, total, diff: total - TOTAL_PAR, i};
   }).sort((a,b) => a.total - b.total);
 
-  let html = ranked.map((p, rank) => {
+  let html = '';
+  if (r.course) html += `<div style="font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">${r.course}</div>`;
+
+  html += ranked.map((p, rank) => {
     const ds = p.diff === 0 ? 'E' : p.diff > 0 ? `+${p.diff}` : `${p.diff}`;
     const dc = p.diff === 0 ? 'p-even' : p.diff < 0 ? 'p-under' : 'p-over';
     return `<div class="podium-card ${rank===0?'first':''}">
@@ -440,7 +566,6 @@ function renderTotals(round) {
       const cls = d===null?'':d<0?'under':d>0?'over':'';
       html += `<div class="hg ${cls}">${s!==null?s:'—'}</div>`;
     });
-    const rowTotal = r.players.reduce((sum,p,pi) => sum+(r.scores[pi][h]||0), 0);
     html += `<div class="hg tcol"></div>`;
   }
   html += `<div class="hg hdr tcol">TOT</div>`;
@@ -457,12 +582,13 @@ function saveAndNew() {
   const round = {
     date: new Date().toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'}),
     time: new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    course: COURSES[selectedCourse].name,
     players: JSON.parse(JSON.stringify(activePlayers)),
-    scores: JSON.parse(JSON.stringify(scores))
+    scores: JSON.parse(JSON.stringify(scores)),
+    notes: JSON.parse(JSON.stringify(holeNotes))
   };
   savedRounds.unshift(round);
 
-  // update known players
   activePlayers.forEach((p, pi) => {
     const total = scores[pi].reduce((s,v)=>s+(v||0),0);
     const holesPlayed = scores[pi].filter(v=>v!==null).length;
@@ -494,7 +620,7 @@ function renderHistory() {
     const ds = w.total - TOTAL_PAR;
     const dsStr = ds===0?'E':ds>0?`+${ds}`:`${ds}`;
     return `<div class="round-card">
-      <div class="round-date">${r.date} · ${r.time}</div>
+      <div class="round-date">${r.date} · ${r.time}${r.course ? ' · ' + r.course : ''}</div>
       <div class="round-players">${r.players.map(p=>p.name).join(', ')}</div>
       <div class="round-winner">🏆 ${w.name} — ${w.total} (${dsStr})</div>
       <div class="round-actions">
@@ -524,33 +650,41 @@ function renderPlayers() {
     container.innerHTML = '<div style="font-size:13px;color:var(--text-dim);padding:1rem 0;">No players yet — finish a round to add them.</div>';
     return;
   }
-  const sorted = [...knownPlayers].sort((a,b) => (a.totalScore/a.rounds) - (b.totalScore/b.rounds));
+  const sorted = [...knownPlayers].map((p, origIdx) => ({...p, origIdx})).sort((a,b) => (a.totalScore/a.rounds) - (b.totalScore/b.rounds));
   container.innerHTML = sorted.map((p, rank) => {
     const avg = (p.totalScore / p.rounds).toFixed(1);
     const avgDiff = (p.totalScore / p.rounds - TOTAL_PAR).toFixed(1);
     const diffStr = parseFloat(avgDiff) === 0 ? 'E' : parseFloat(avgDiff) > 0 ? `+${avgDiff}` : avgDiff;
     const diffClass = parseFloat(avgDiff) < 0 ? 'p-under' : parseFloat(avgDiff) > 0 ? 'p-over' : 'p-even';
     return `<div class="player-stat-card">
-      <div>
+      <div style="flex:1;">
         <div class="ps-name">${rank===0?'🏆 ':''}${p.name}</div>
         <div class="ps-meta">${p.rounds} round${p.rounds!==1?'s':''} · avg ${diffStr} par</div>
       </div>
-      <div class="ps-stat">
+      <div class="ps-stat" style="margin-right:12px;">
         <div class="ps-avg ${diffClass}">${avg}</div>
         <div class="ps-rounds">avg score</div>
       </div>
+      <button class="small-btn danger" onclick="deletePlayer(${p.origIdx})" style="align-self:center;">Delete</button>
     </div>`;
   }).join('');
 }
 
+function deletePlayer(origIdx) {
+  knownPlayers.splice(origIdx, 1);
+  save();
+  renderPlayers();
+}
+
 // ── CSV EXPORT ──
 function exportCSV(ri) {
-  const r = ri !== null ? savedRounds[ri] : {players: activePlayers, scores, date: new Date().toLocaleDateString()};
-  let rows = [['Hole','Par',...r.players.map(p=>p.name)]];
+  const r = ri !== null ? savedRounds[ri] : {players: activePlayers, scores, notes: holeNotes, course: COURSES[selectedCourse].name, date: new Date().toLocaleDateString()};
+  let rows = [['Hole','Par',...r.players.map(p=>p.name),'Notes']];
   for (let h=0; h<HOLES; h++) {
-    rows.push([h+1, PAR, ...r.players.map((p,pi)=>r.scores[pi][h]!==null?r.scores[pi][h]:'')]);
+    const note = (r.notes && r.notes[h]) ? r.notes[h].replace(/,/g,' ') : '';
+    rows.push([h+1, PAR, ...r.players.map((p,pi)=>r.scores[pi][h]!==null?r.scores[pi][h]:''), note]);
   }
-  rows.push(['Total', TOTAL_PAR, ...r.players.map((p,pi)=>r.scores[pi].reduce((s,v)=>s+(v||0),0))]);
+  rows.push(['Total', TOTAL_PAR, ...r.players.map((p,pi)=>r.scores[pi].reduce((s,v)=>s+(v||0),0)), '']);
   const csv = rows.map(r=>r.join(',')).join('\n');
   const blob = new Blob([csv],{type:'text/csv'});
   const url = URL.createObjectURL(blob);
@@ -611,7 +745,6 @@ function clearThrows() {
 }
 
 function renderThrows() {
-  const last = throws.length ? throws[0].feet.toLocaleString() : '—';
   document.getElementById('d-last').textContent = throws.length ? throws[0].feet.toLocaleString() : '—';
   const best = throws.length ? throws[0].feet : null;
   document.getElementById('d-best').textContent = best ? best.toLocaleString() : '—';
