@@ -26,12 +26,10 @@
     .screen { display: none; flex-direction: column; flex: 1; overflow: hidden; }
     .screen.active { display: flex; }
 
-    /* HEADER */
     .hdr { padding: 1.1rem 1.25rem 0.7rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; justify-content: space-between; flex-shrink: 0; }
     .hdr h1 { font-family: var(--font-d); font-size: 2rem; color: var(--accent); letter-spacing: 0.04em; line-height: 1; }
     .hdr-sub { font-size: 13px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    /* BUTTONS */
     .btn { font-family: var(--font-d); font-size: 1.5rem; letter-spacing: 0.08em; border-radius: 5px; border: 1px solid; cursor: pointer; transition: background 0.12s, transform 0.08s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; padding: 0.9rem 1rem; width: 100%; }
     .btn:active { transform: scale(0.97); }
     .btn-green { background: var(--accent-glow); color: var(--accent); border-color: var(--accent-dim); }
@@ -42,11 +40,10 @@
     .small-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
     .small-btn.danger:hover { color: var(--red); border-color: var(--red-dim); }
 
-    /* SCROLLABLE BODY */
     .scroll-body { flex: 1; overflow-y: auto; padding: 1.25rem; }
-
-    /* ── SETUP ── */
     .field-label { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+
+    /* SETUP */
     .player-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .player-row input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: var(--font-m); font-size: 14px; padding: 10px 12px; outline: none; transition: border-color 0.15s; }
     .player-row input:focus { border-color: var(--accent-dim); }
@@ -66,10 +63,10 @@
     .course-btn .course-meta { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; }
     .course-btn.selected .course-meta { color: var(--accent-dim); }
 
-    /* ── SCORING ── */
+    /* SCORING */
     .score-hdr { padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .hole-ind { font-family: var(--font-d); font-size: 1.5rem; color: var(--accent); letter-spacing: 0.04em; }
-    .nav-btn { background: none; border: 2px solid var(--border); border-radius: 8px; color: var(--text-muted); font-size: 20px; padding: 4px 24px; cursor: pointer; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
+    .hole-ind { font-family: var(--font-d); font-size: 1.6rem; color: var(--accent); letter-spacing: 0.04em; }
+    .nav-btn { background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); font-size: 18px; padding: 2px 12px; cursor: pointer; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
     .nav-btn:active { background: var(--surface); }
     .players-scroll { flex: 1; overflow-y: auto; padding: 0.75rem 1.25rem; display: flex; flex-direction: column; gap: 10px; }
     .psc { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
@@ -88,14 +85,14 @@
     .score-lbl { font-size: 11px; color: var(--text-dim); text-align: center; letter-spacing: 0.08em; margin-top: 2px; }
     .score-footer { padding: 0.75rem 1.25rem; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
 
-    /* NOTES BUTTON & STRIP */
+    /* NOTES */
     .notes-strip { padding: 6px 1.25rem 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .notes-badge { flex: 1; font-size: 20px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
+    .notes-badge { flex: 1; font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
     .notes-badge.has-note { color: var(--yellow); }
-    .note-edit-btn { font-family: var(--font-m); font-size: 20px; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
+    .note-edit-btn { font-family: var(--font-m); font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
     .note-edit-btn:hover { color: var(--yellow); border-color: var(--yellow-dim); }
 
-    /* NOTES MODAL */
+    /* MODAL */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: none; align-items: flex-end; justify-content: center; }
     .modal-overlay.open { display: flex; }
     .modal-sheet { background: var(--surface); border: 1px solid var(--border); border-bottom: none; border-radius: 12px 12px 0 0; width: 100%; max-width: 540px; padding: 1.25rem; display: flex; flex-direction: column; gap: 10px; animation: slideUp 0.2s ease; }
@@ -107,35 +104,34 @@
     .notes-textarea::placeholder { color: var(--text-dim); }
     .modal-actions { display: flex; gap: 8px; }
 
-    /* ── TOTALS ── */
+    /* TOTALS */
     .podium-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .podium-card.first { border-color: var(--accent-dim); background: var(--accent-glow); }
     .podium-name { font-size: 14px; color: var(--text-muted); margin-bottom: 2px; }
     .podium-score { font-family: var(--font-d); font-size: 2rem; color: var(--text); }
-    .hole-grid { display: grid; grid-template-columns: 28px repeat(18, 1fr) 36px; gap: 1px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 1.25rem; overflow-x: auto; }
-    .hg { background: var(--bg); padding: 5px 2px; text-align: center; color: var(--text-muted); font-size: 11px; white-space: nowrap; }
-    .hg.hdr { background: var(--surface); color: var(--text-dim); font-size: 10px; }
-    .hg.pname { background: var(--surface); color: var(--text); text-align: left; padding-left: 6px; font-size: 11px; }
+    .hole-grid-wrap { overflow-x: auto; margin-top: 1.25rem; border-radius: 5px; border: 1px solid var(--border); }
+    .hole-grid { display: grid; gap: 1px; background: var(--border); min-width: max-content; }
+    .hg { background: var(--bg); padding: 5px 7px; text-align: center; color: var(--text-muted); font-size: 11px; white-space: nowrap; }
+    .hg.hdr-cell { background: var(--surface); color: var(--text-dim); font-size: 10px; }
     .hg.under { color: var(--accent); }
     .hg.over { color: var(--red); }
     .hg.tcol { background: var(--surface); font-weight: 500; color: var(--text); }
 
-    /* ── HISTORY ── */
+    /* HISTORY */
     .round-card { border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
     .round-date { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 4px; }
     .round-players { font-size: 13px; color: var(--text); }
     .round-winner { font-size: 11px; color: var(--accent); margin-top: 2px; }
     .round-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 
-    /* ── PLAYERS SCREEN ── */
+    /* PLAYERS */
     .player-stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     .ps-name { font-size: 14px; color: var(--text); margin-bottom: 3px; }
     .ps-meta { font-size: 11px; color: var(--text-muted); }
-    .ps-stat { text-align: right; }
     .ps-avg { font-family: var(--font-d); font-size: 1.8rem; color: var(--accent); line-height: 1; }
     .ps-rounds { font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
 
-    /* ── DISTANCE ── */
+    /* DISTANCE */
     .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .metric-box { background: var(--bg); padding: 1.1rem 1.25rem 0.9rem; }
     .metric-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
@@ -155,11 +151,34 @@
     .best-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-glow); border: 1px solid rgba(127,255,95,0.25); padding: 2px 7px; border-radius: 3px; margin-top: 3px; display: inline-block; }
     .err-bar { margin: 0 1.25rem 0.75rem; padding: 10px 14px; background: var(--red-glow); border: 1px solid var(--red-dim); border-radius: 5px; font-size: 12px; color: var(--red); display: none; }
 
+    /* COURSE CREATOR */
+    .text-input { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; color: var(--text); font-family: var(--font-m); font-size: 15px; padding: 11px 13px; outline: none; transition: border-color 0.15s; }
+    .text-input:focus { border-color: var(--accent-dim); }
+    .text-input::placeholder { color: var(--text-dim); }
+    .hole-count-row { display: flex; gap: 8px; }
+    .hole-count-btn { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; color: var(--text-muted); font-family: var(--font-d); font-size: 1.4rem; letter-spacing: 0.06em; padding: 10px; cursor: pointer; text-align: center; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+    .hole-count-btn.selected { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
+    .par-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .par-hole-cell { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .par-hole-num { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .par-stepper { display: flex; align-items: center; width: 100%; }
+    .par-step-btn { width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; flex-shrink: 0; }
+    .par-step-btn:active { transform: scale(0.9); }
+    .par-val { flex: 1; text-align: center; font-family: var(--font-d); font-size: 1.5rem; color: var(--text); line-height: 1; }
+    .set-all-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .set-all-btn { font-family: var(--font-m); font-size: 12px; padding: 5px 11px; border-radius: 4px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .set-all-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+    .courses-list-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+    .courses-list-title { font-size: 14px; color: var(--text); margin-bottom: 2px; }
+    .courses-list-meta { font-size: 11px; color: var(--text-muted); }
+    .courses-list-actions { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+    .builtin-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); padding: 2px 7px; border-radius: 3px; }
+
     /* BOTTOM NAV */
     .bottom-nav { display: flex; border-top: 1px solid var(--border); flex-shrink: 0; }
-    .nav-item { flex: 1; padding: 9px 4px 11px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .nav-icon { font-size: 17px; line-height: 2; }
-    .nav-lbl { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+    .nav-item { flex: 1; padding: 9px 2px 11px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .nav-icon { font-size: 15px; line-height: 1; }
+    .nav-lbl { font-family: var(--font-m); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); }
     .nav-item.active .nav-lbl { color: var(--accent); }
   </style>
 </head>
@@ -169,25 +188,13 @@
 <div class="screen active" id="screen-setup">
   <div class="hdr"><h1>Next Best Throw</h1><span class="hdr-sub">New Round</span></div>
   <div class="scroll-body" style="display:flex;flex-direction:column;gap:1.25rem;">
-
-    <!-- COURSE -->
     <div>
-      <div class="field-label">Course</div>
-      <button class="course-btn selected" id="course-0" onclick="selectCourse(0)">
-        <span class="course-name">Coachman Park</span>
-        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
-      </button>
-      <button class="course-btn" id="course-1" onclick="selectCourse(1)">
-        <span class="course-name">Cliff Stephens Park</span>
-        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
-      </button>
-      <button class="course-btn" id="course-2" onclick="selectCourse(2)">
-        <span class="course-name">Taylor Park</span>
-        <span class="course-meta">18 holes · All Par 3 · Total Par 54</span>
-      </button>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+        <span class="field-label" style="margin-bottom:0;">Course</span>
+        <button class="small-btn" onclick="showScreen('courses')">+ New course</button>
+      </div>
+      <div id="setup-course-list"></div>
     </div>
-
-    <!-- PLAYERS -->
     <div>
       <div class="field-label">Players (1–4)</div>
       <div id="player-inputs"></div>
@@ -195,7 +202,6 @@
       <div id="saved-pills-label" class="field-label" style="margin-top:12px;">Saved players — tap to add</div>
       <div id="saved-pills"></div>
     </div>
-
     <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;">
       <button class="btn btn-green" onclick="startRound()">Start Round</button>
       <button class="btn btn-ghost" onclick="showScreen('history')">View past rounds</button>
@@ -213,8 +219,7 @@
       <button class="nav-btn" onclick="chHole(1)">›</button>
     </div>
   </div>
-  <div style="padding:6px 1.25rem;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;flex-shrink:0;" id="course-lbl-scoring">PAR 3 · ALL HOLES</div>
-  <!-- NOTES STRIP -->
+  <div style="padding:6px 1.25rem;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;flex-shrink:0;" id="course-lbl-scoring"></div>
   <div class="notes-strip">
     <span class="notes-badge" id="notes-preview">no notes</span>
     <button class="note-edit-btn" onclick="openNoteModal()">📝 Note</button>
@@ -253,6 +258,55 @@
   <div class="scroll-body" id="players-body"></div>
 </div>
 
+<!-- ══ COURSES ══ -->
+<div class="screen" id="screen-courses">
+  <div class="hdr"><h1>Courses</h1><span class="hdr-sub">Create &amp; Manage</span></div>
+  <div class="scroll-body" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+    <!-- CREATE FORM -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="field-label">New Course</div>
+
+      <div>
+        <div class="field-label" style="margin-bottom:6px;">Course name</div>
+        <input class="text-input" id="new-course-name" type="text" maxlength="40" placeholder="e.g. Sunset Pines DGC" />
+      </div>
+
+      <div>
+        <div class="field-label" style="margin-bottom:6px;">Number of holes</div>
+        <div class="hole-count-row">
+          <button class="hole-count-btn" id="hc-9"  onclick="setHoleCount(9)">9</button>
+          <button class="hole-count-btn selected" id="hc-18" onclick="setHoleCount(18)">18</button>
+          <button class="hole-count-btn" id="hc-custom" onclick="setHoleCount('custom')">Custom</button>
+        </div>
+        <div id="custom-hole-wrap" style="display:none;margin-top:8px;">
+          <input class="text-input" id="custom-hole-count" type="number" min="1" max="36" placeholder="Enter number of holes (1–36)" oninput="onCustomHoleCount()" />
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div class="field-label" style="margin-bottom:0;">Par per hole</div>
+          <div class="set-all-row">
+            <button class="set-all-btn" onclick="setAllPar(3)">All 3</button>
+            <button class="set-all-btn" onclick="setAllPar(4)">All 4</button>
+            <button class="set-all-btn" onclick="setAllPar(5)">All 5</button>
+          </div>
+        </div>
+        <div class="par-grid" id="par-grid"></div>
+      </div>
+
+      <button class="btn btn-green" onclick="saveCourse()">Save Course</button>
+    </div>
+
+    <!-- ALL COURSES LIST -->
+    <div>
+      <div class="field-label">All Courses</div>
+      <div id="courses-list"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ DISTANCE ══ -->
 <div class="screen" id="screen-distance">
   <div class="hdr"><h1>Distance</h1><span class="hdr-sub">GPS Tracker</span></div>
@@ -282,7 +336,7 @@
   <div class="err-bar" id="err-bar"></div>
   <div class="dist-controls">
     <button class="btn btn-green" id="btn-start" disabled onclick="markStart()">Mark Throw Start</button>
-    <button class="btn btn-red" id="btn-end" disabled onclick="markEnd()">Mark Disc Landing</button>
+    <button class="btn btn-red"   id="btn-end"   disabled onclick="markEnd()">Mark Disc Landing</button>
   </div>
   <div style="padding:0 1.25rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0;">
     <span style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);">Top 5 throws</span>
@@ -296,9 +350,9 @@
   <div class="modal-sheet">
     <div>
       <div class="modal-title" id="modal-hole-title">Hole 1 — Note</div>
-      <div class="modal-subtitle" id="modal-course-subtitle">Coachman Park</div>
+      <div class="modal-subtitle" id="modal-course-subtitle">Course</div>
     </div>
-    <textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Watch out for the big tree on the left. Aim for the basket's right side..."></textarea>
+    <textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Watch out for the big tree on the left..."></textarea>
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:1;font-size:1rem;padding:0.75rem;" onclick="closeNoteModal()">Cancel</button>
       <button class="btn btn-green" style="flex:2;font-size:1rem;padding:0.75rem;" onclick="saveNote()">Save Note</button>
@@ -308,74 +362,83 @@
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <button class="nav-item active" id="nav-setup" onclick="showScreen('setup')"><span class="nav-icon">🏁</span><span class="nav-lbl">Setup</span></button>
-  <button class="nav-item" id="nav-scoring" onclick="showScreen('scoring')"><span class="nav-icon">✏️</span><span class="nav-lbl">Score</span></button>
-  <button class="nav-item" id="nav-history" onclick="showScreen('history')"><span class="nav-icon">📋</span><span class="nav-lbl">History</span></button>
-  <button class="nav-item" id="nav-players" onclick="showScreen('players')"><span class="nav-icon">👥</span><span class="nav-lbl">Players</span></button>
-  <button class="nav-item" id="nav-distance" onclick="showScreen('distance')"><span class="nav-icon">📍</span><span class="nav-lbl">Distance</span></button>
+  <button class="nav-item active" id="nav-setup"    onclick="showScreen('setup')">   <span class="nav-icon">🏁</span><span class="nav-lbl">Setup</span></button>
+  <button class="nav-item"        id="nav-scoring"  onclick="showScreen('scoring')"> <span class="nav-icon">✏️</span><span class="nav-lbl">Score</span></button>
+  <button class="nav-item"        id="nav-history"  onclick="showScreen('history')"> <span class="nav-icon">📋</span><span class="nav-lbl">History</span></button>
+  <button class="nav-item"        id="nav-players"  onclick="showScreen('players')"> <span class="nav-icon">👥</span><span class="nav-lbl">Players</span></button>
+  <button class="nav-item"        id="nav-courses"  onclick="showScreen('courses')"> <span class="nav-icon">🗺️</span><span class="nav-lbl">Courses</span></button>
+  <button class="nav-item"        id="nav-distance" onclick="showScreen('distance')"><span class="nav-icon">📍</span><span class="nav-lbl">Distance</span></button>
 </div>
 
 <script>
-const PAR = 3;
-const HOLES = 18;
-const TOTAL_PAR = PAR * HOLES;
-
-const COURSES = [
-  { name: 'Coachman Park',      holes: 18, par: 3 },
-  { name: 'Cliff Stephens Park', holes: 18, par: 3 },
-  { name: 'Taylor Park',        holes: 18, par: 3 },
+// ── BUILT-INS ──
+const BUILTIN_COURSES = [
+  { name: 'Coachman Park',       holes: 18, pars: new Array(18).fill(3), builtIn: true },
+  { name: 'Cliff Stephens Park', holes: 18, pars: new Array(18).fill(3), builtIn: true },
+  { name: 'Taylor Park',         holes: 18, pars: new Array(18).fill(3), builtIn: true },
 ];
 
 // ── STATE ──
-let activePlayers = [];
-let scores = [];
-let holeNotes = new Array(HOLES).fill(''); // notes[holeIdx]
-let currentHole = 0;
+let activePlayers  = [];
+let scores         = [];
+let holeNotes      = [];
+let currentHole    = 0;
 let selectedCourse = 0;
-let savedRounds = [];
-let knownPlayers = [];
-let throws = [];
-let startCoords = null;
-let currentPos = null;
-let gpsReady = false;
+let savedRounds    = [];
+let knownPlayers   = [];
+let customCourses  = [];
+let throws         = [];
+let startCoords    = null;
+let currentPos     = null;
+let gpsReady       = false;
+
+// Creator
+let creatorHoles = 18;
+let creatorPars  = new Array(18).fill(3);
+
+function allCourses() { return [...BUILTIN_COURSES, ...customCourses]; }
 
 function load() {
-  try { savedRounds = JSON.parse(localStorage.getItem('dg_rounds') || '[]'); } catch(e) { savedRounds = []; }
-  try { knownPlayers = JSON.parse(localStorage.getItem('dg_players') || '[]'); } catch(e) { knownPlayers = []; }
-  try { throws = JSON.parse(localStorage.getItem('dg_throws') || '[]'); } catch(e) { throws = []; }
+  try { savedRounds   = JSON.parse(localStorage.getItem('dg_rounds')   || '[]'); } catch(e) { savedRounds = []; }
+  try { knownPlayers  = JSON.parse(localStorage.getItem('dg_players')  || '[]'); } catch(e) { knownPlayers = []; }
+  try { throws        = JSON.parse(localStorage.getItem('dg_throws')   || '[]'); } catch(e) { throws = []; }
+  try { customCourses = JSON.parse(localStorage.getItem('dg_courses')  || '[]'); } catch(e) { customCourses = []; }
 }
-
 function save() {
-  try { localStorage.setItem('dg_rounds', JSON.stringify(savedRounds)); } catch(e) {}
-  try { localStorage.setItem('dg_players', JSON.stringify(knownPlayers)); } catch(e) {}
-  try { localStorage.setItem('dg_throws', JSON.stringify(throws)); } catch(e) {}
+  try { localStorage.setItem('dg_rounds',  JSON.stringify(savedRounds));   } catch(e) {}
+  try { localStorage.setItem('dg_players', JSON.stringify(knownPlayers));  } catch(e) {}
+  try { localStorage.setItem('dg_throws',  JSON.stringify(throws));        } catch(e) {}
+  try { localStorage.setItem('dg_courses', JSON.stringify(customCourses)); } catch(e) {}
 }
 
-// ── SCREEN MANAGER ──
+// ── SCREENS ──
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
   const nav = document.getElementById('nav-' + id);
   if (nav) nav.classList.add('active');
-  if (id === 'setup') renderSetup();
-  if (id === 'scoring') renderScoring();
-  if (id === 'totals') renderTotals(null);
-  if (id === 'history') renderHistory();
-  if (id === 'players') renderPlayers();
+  if (id === 'setup')    renderSetup();
+  if (id === 'scoring')  renderScoring();
+  if (id === 'totals')   renderTotals(null);
+  if (id === 'history')  renderHistory();
+  if (id === 'players')  renderPlayers();
+  if (id === 'courses')  renderCoursesScreen();
   if (id === 'distance') renderThrows();
-}
-
-// ── COURSE SELECTION ──
-function selectCourse(idx) {
-  selectedCourse = idx;
-  document.querySelectorAll('.course-btn').forEach((b, i) => {
-    b.classList.toggle('selected', i === idx);
-  });
 }
 
 // ── SETUP ──
 function renderSetup() {
+  const courses = allCourses();
+  document.getElementById('setup-course-list').innerHTML = courses.map((c, i) => {
+    const tp = c.pars.reduce((s,v)=>s+v,0);
+    const desc = c.pars.every(p=>p===c.pars[0]) ? `All Par ${c.pars[0]}` : `Par ${Math.min(...c.pars)}–${Math.max(...c.pars)}`;
+    return `<button class="course-btn ${i===selectedCourse?'selected':''}" onclick="selectCourse(${i})">
+      <span class="course-name">${c.name}</span>
+      <span class="course-meta">${c.holes} holes · ${desc} · Total Par ${tp}</span>
+    </button>`;
+  }).join('');
+
   const container = document.getElementById('player-inputs');
   container.innerHTML = '';
   if (activePlayers.length === 0) activePlayers = [{name:''}];
@@ -383,245 +446,189 @@ function renderSetup() {
     const row = document.createElement('div');
     row.className = 'player-row';
     row.innerHTML = `
-      <input type="text" placeholder="Player ${i+1}" value="${p.name}" maxlength="16"
-        oninput="activePlayers[${i}].name=this.value" />
-      ${activePlayers.length > 1 ? `<button class="remove-btn" onclick="removePlayerRow(${i})">✕</button>` : ''}
-    `;
+      <input type="text" placeholder="Player ${i+1}" value="${p.name}" maxlength="16" oninput="activePlayers[${i}].name=this.value" />
+      ${activePlayers.length > 1 ? `<button class="remove-btn" onclick="removePlayerRow(${i})">✕</button>` : ''}`;
     container.appendChild(row);
   });
   document.getElementById('add-btn').style.display = activePlayers.length >= 4 ? 'none' : 'block';
 
-  const pills = document.getElementById('saved-pills');
-  const pillLabel = document.getElementById('saved-pills-label');
   const usedNames = activePlayers.map(p => p.name.trim().toLowerCase());
   const available = knownPlayers.filter(kp => !usedNames.includes(kp.name.toLowerCase()));
-  pillLabel.style.display = available.length ? 'block' : 'none';
-  pills.innerHTML = available.map(kp =>
+  document.getElementById('saved-pills-label').style.display = available.length ? 'block' : 'none';
+  document.getElementById('saved-pills').innerHTML = available.map(kp =>
     `<span class="saved-player-pill" onclick="addSavedPlayer('${kp.name.replace(/'/g,"\\'")}')">+ ${kp.name}</span>`
   ).join('');
 }
 
-function addPlayerRow() {
-  if (activePlayers.length >= 4) return;
-  activePlayers.push({name:''});
-  renderSetup();
-}
-
-function removePlayerRow(i) {
-  activePlayers.splice(i, 1);
-  renderSetup();
-}
-
+function selectCourse(i) { selectedCourse = i; renderSetup(); }
+function addPlayerRow() { if (activePlayers.length < 4) { activePlayers.push({name:''}); renderSetup(); } }
+function removePlayerRow(i) { activePlayers.splice(i,1); renderSetup(); }
 function addSavedPlayer(name) {
   if (activePlayers.length >= 4) return;
-  const emptyIdx = activePlayers.findIndex(p => !p.name.trim());
-  if (emptyIdx !== -1) activePlayers[emptyIdx].name = name;
-  else activePlayers.push({name});
+  const ei = activePlayers.findIndex(p => !p.name.trim());
+  if (ei !== -1) activePlayers[ei].name = name; else activePlayers.push({name});
   renderSetup();
 }
-
 function startRound() {
-  const names = activePlayers.map((p, i) => p.name.trim() || `Player ${i+1}`);
-  activePlayers = names.map(n => ({name: n}));
-  scores = activePlayers.map(() => new Array(HOLES).fill(null));
-  holeNotes = new Array(HOLES).fill('');
+  const c = allCourses()[selectedCourse];
+  activePlayers = activePlayers.map((p,i)=>({name:p.name.trim()||`Player ${i+1}`}));
+  scores    = activePlayers.map(()=>new Array(c.holes).fill(null));
+  holeNotes = new Array(c.holes).fill('');
   currentHole = 0;
-  renderScoring();
   showScreen('scoring');
 }
 
 // ── SCORING ──
 function renderScoring() {
-  const course = COURSES[selectedCourse];
-  document.getElementById('hole-lbl').textContent = `Hole ${currentHole + 1}`;
-  document.getElementById('hole-prog').textContent = `${currentHole + 1}/${HOLES}`;
-  document.getElementById('course-lbl-scoring').textContent = `${course.name} · Par 3 · All Holes`;
+  const c = allCourses()[selectedCourse];
+  const hp = c.pars[currentHole];
+  document.getElementById('hole-lbl').textContent = `Hole ${currentHole+1}`;
+  document.getElementById('hole-prog').textContent = `${currentHole+1}/${c.holes}`;
+  document.getElementById('course-lbl-scoring').textContent = `${c.name} · Par ${hp} this hole`;
 
-  // Notes preview strip
-  const note = holeNotes[currentHole] || '';
-  const preview = document.getElementById('notes-preview');
-  if (note.trim()) {
-    preview.textContent = note.trim();
-    preview.className = 'notes-badge has-note';
-  } else {
-    preview.textContent = 'no notes';
-    preview.className = 'notes-badge';
-  }
+  const note = holeNotes[currentHole]||'';
+  const prev = document.getElementById('notes-preview');
+  prev.textContent = note.trim()||'no notes';
+  prev.className = 'notes-badge'+(note.trim()?' has-note':'');
 
-  const container = document.getElementById('players-scroll');
-  container.innerHTML = '';
+  const cont = document.getElementById('players-scroll');
+  cont.innerHTML = '';
   activePlayers.forEach((p, pi) => {
-    const totalScore = scores[pi].reduce((s,v) => s + (v||0), 0);
-    const holesPlayed = scores[pi].filter(v => v !== null).length;
-    const totalPar = holesPlayed * PAR;
-    const diff = totalScore - totalPar;
-    const diffStr = holesPlayed === 0 ? '' : diff === 0 ? 'E' : diff > 0 ? `+${diff}` : `${diff}`;
-    const diffClass = diff === 0 ? 'p-even' : diff < 0 ? 'p-under' : 'p-over';
+    const total = scores[pi].reduce((s,v)=>s+(v||0),0);
+    const parSoFar = c.pars.reduce((s,v,i)=>s+(scores[pi][i]!==null?v:0),0);
+    const holesPlayed = scores[pi].filter(v=>v!==null).length;
+    const diff = total - parSoFar;
+    const diffStr = holesPlayed===0?'':diff===0?'E':diff>0?`+${diff}`:`${diff}`;
+    const diffClass = diff===0?'p-even':diff<0?'p-under':'p-over';
     const hs = scores[pi][currentHole];
     const card = document.createElement('div');
-    card.className = 'psc';
-    card.innerHTML = `
+    card.className='psc';
+    card.innerHTML=`
       <div class="psc-top">
         <span class="psc-name">${p.name}</span>
         <div style="display:flex;align-items:center;gap:8px;">
-          <span class="psc-total">${totalScore > 0 ? totalScore : '—'}</span>
-          ${diffStr ? `<span class="psc-par ${diffClass}">${diffStr}</span>` : ''}
+          <span class="psc-total">${total>0?total:'—'}</span>
+          ${diffStr?`<span class="psc-par ${diffClass}">${diffStr}</span>`:''}
         </div>
       </div>
       <div class="stepper">
         <button class="step-btn" onclick="adjScore(${pi},-1)">−</button>
         <div style="flex:1;">
           <div class="score-disp ${hs===null?'empty':''}">${hs!==null?hs:'—'}</div>
-          <div class="score-lbl">${hs!==null?scoreLabel(hs):'tap to set'}</div>
+          <div class="score-lbl">${hs!==null?scoreLabel(hs,hp):'tap to set'}</div>
         </div>
         <button class="step-btn" onclick="adjScore(${pi},1)">+</button>
       </div>`;
-    container.appendChild(card);
+    cont.appendChild(card);
   });
 }
 
-function scoreLabel(s) {
-  const d = s - PAR;
-  if (d <= -3) return 'albatross';
-  if (d === -2) return 'eagle';
-  if (d === -1) return 'birdie';
-  if (d === 0) return 'par';
-  if (d === 1) return 'bogey';
-  if (d === 2) return 'double bogey';
-  return `+${d}`;
+function scoreLabel(s, par) {
+  const d=s-par;
+  if(d<=-3)return'albatross'; if(d===-2)return'eagle'; if(d===-1)return'birdie';
+  if(d===0)return'par'; if(d===1)return'bogey'; if(d===2)return'double bogey';
+  return`+${d}`;
 }
-
-function adjScore(pi, delta) {
-  const cur = scores[pi][currentHole];
-  scores[pi][currentHole] = cur === null ? (delta > 0 ? 1 : null) : Math.max(1, cur + delta);
+function adjScore(pi,delta) {
+  const cur=scores[pi][currentHole];
+  scores[pi][currentHole]=cur===null?(delta>0?1:null):Math.max(1,cur+delta);
   renderScoring();
 }
-
 function chHole(delta) {
-  currentHole = Math.max(0, Math.min(HOLES-1, currentHole+delta));
+  const c=allCourses()[selectedCourse];
+  currentHole=Math.max(0,Math.min(c.holes-1,currentHole+delta));
   renderScoring();
 }
 
-// ── NOTES MODAL ──
+// ── NOTES ──
 function openNoteModal() {
-  const course = COURSES[selectedCourse];
-  document.getElementById('modal-hole-title').textContent = `Hole ${currentHole + 1} — Note`;
-  document.getElementById('modal-course-subtitle').textContent = course.name;
-  document.getElementById('note-textarea').value = holeNotes[currentHole] || '';
+  const c=allCourses()[selectedCourse];
+  document.getElementById('modal-hole-title').textContent=`Hole ${currentHole+1} — Note`;
+  document.getElementById('modal-course-subtitle').textContent=c.name;
+  document.getElementById('note-textarea').value=holeNotes[currentHole]||'';
   document.getElementById('note-modal').classList.add('open');
-  setTimeout(() => document.getElementById('note-textarea').focus(), 200);
+  setTimeout(()=>document.getElementById('note-textarea').focus(),200);
 }
-
-function closeNoteModal() {
-  document.getElementById('note-modal').classList.remove('open');
-}
-
-function saveNote() {
-  holeNotes[currentHole] = document.getElementById('note-textarea').value.trim();
-  closeNoteModal();
-  renderScoring();
-}
-
-function handleModalBgClick(e) {
-  if (e.target === document.getElementById('note-modal')) closeNoteModal();
-}
+function closeNoteModal() { document.getElementById('note-modal').classList.remove('open'); }
+function saveNote() { holeNotes[currentHole]=document.getElementById('note-textarea').value.trim(); closeNoteModal(); renderScoring(); }
+function handleModalBgClick(e) { if(e.target===document.getElementById('note-modal')) closeNoteModal(); }
 
 // ── TOTALS ──
 function goTotals() { renderTotals(null); showScreen('totals'); }
-
 function renderTotals(round) {
-  const r = round || {players: activePlayers, scores, notes: holeNotes, course: COURSES[selectedCourse].name, date:'', time:''};
-  const container = document.getElementById('totals-body');
-  const ranked = r.players.map((p,i) => {
-    const total = r.scores[i].reduce((s,v) => s+(v||0), 0);
-    return {name: p.name, total, diff: total - TOTAL_PAR, i};
-  }).sort((a,b) => a.total - b.total);
+  const c = round ? null : allCourses()[selectedCourse];
+  const r = round || { players:activePlayers, scores, notes:holeNotes, courseName:c.name, coursePars:c.pars, holes:c.holes };
+  const holes = r.holes||r.scores[0].length;
+  const pars  = r.coursePars||new Array(holes).fill(3);
+  const totalPar = pars.reduce((s,v)=>s+v,0);
 
-  let html = '';
-  if (r.course) html += `<div style="font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">${r.course}</div>`;
+  const ranked = r.players.map((p,i)=>({name:p.name,total:r.scores[i].reduce((s,v)=>s+(v||0),0),i}))
+    .sort((a,b)=>a.total-b.total);
 
-  html += ranked.map((p, rank) => {
-    const ds = p.diff === 0 ? 'E' : p.diff > 0 ? `+${p.diff}` : `${p.diff}`;
-    const dc = p.diff === 0 ? 'p-even' : p.diff < 0 ? 'p-under' : 'p-over';
+  let html = r.courseName ? `<div style="font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">${r.courseName}</div>` : '';
+  html += ranked.map((p,rank)=>{
+    const ds=p.diff===0?'E':p.diff>0?`+${p.diff}`:`${p.diff}`;
+    const dc=p.diff===0?'p-even':p.diff<0?'p-under':'p-over';
+    const diff=p.total-totalPar;
+    const dss=diff===0?'E':diff>0?`+${diff}`:`${diff}`;
+    const dcc=diff===0?'p-even':diff<0?'p-under':'p-over';
     return `<div class="podium-card ${rank===0?'first':''}">
-      <div>
-        <div class="podium-name">${rank===0?'🏆 ':''}${p.name}</div>
-        <div class="podium-score">${p.total}</div>
-      </div>
-      <div style="font-family:var(--font-d);font-size:1.4rem;" class="${dc}">${ds}</div>
+      <div><div class="podium-name">${rank===0?'🏆 ':''}${p.name}</div><div class="podium-score">${p.total}</div></div>
+      <div style="font-family:var(--font-d);font-size:1.4rem;" class="${dcc}">${dss}</div>
     </div>`;
   }).join('');
 
-  // hole grid
-  html += `<div class="hole-grid">`;
-  html += `<div class="hg hdr">H</div>`;
-  r.players.forEach(p => { html += `<div class="hg hdr" style="overflow:hidden;text-overflow:ellipsis;">${p.name.length>5?p.name.slice(0,5)+'…':p.name}</div>`; });
-  html += `<div class="hg hdr tcol">TOT</div>`;
-  for (let h=0; h<HOLES; h++) {
-    html += `<div class="hg hdr">${h+1}</div>`;
-    r.players.forEach((p,pi) => {
-      const s = r.scores[pi][h];
-      const d = s!==null ? s-PAR : null;
-      const cls = d===null?'':d<0?'under':d>0?'over':'';
-      html += `<div class="hg ${cls}">${s!==null?s:'—'}</div>`;
+  html += `<div class="hole-grid-wrap"><div class="hole-grid" style="grid-template-columns:28px ${r.players.map(()=>'1fr').join(' ')} 36px;">`;
+  html += `<div class="hg hdr-cell">H</div>`;
+  r.players.forEach(p=>{ html+=`<div class="hg hdr-cell">${p.name.length>5?p.name.slice(0,5)+'…':p.name}</div>`; });
+  html += `<div class="hg hdr-cell tcol">TOT</div>`;
+  for(let h=0;h<holes;h++) {
+    html+=`<div class="hg hdr-cell">${h+1}</div>`;
+    r.players.forEach((p,pi)=>{
+      const s=r.scores[pi][h]; const d=s!==null?s-pars[h]:null;
+      html+=`<div class="hg ${d===null?'':d<0?'under':d>0?'over':''}">${s!==null?s:'—'}</div>`;
     });
-    html += `<div class="hg tcol"></div>`;
+    html+=`<div class="hg tcol"></div>`;
   }
-  html += `<div class="hg hdr tcol">TOT</div>`;
-  r.players.forEach((p,pi) => {
-    const t = r.scores[pi].reduce((s,v)=>s+(v||0),0);
-    html += `<div class="hg tcol">${t}</div>`;
-  });
-  html += `<div class="hg tcol">${TOTAL_PAR}</div>`;
-  html += `</div>`;
-  container.innerHTML = html;
+  html+=`<div class="hg hdr-cell tcol">TOT</div>`;
+  r.players.forEach((p,pi)=>{ html+=`<div class="hg tcol">${r.scores[pi].reduce((s,v)=>s+(v||0),0)}</div>`; });
+  html+=`<div class="hg tcol">${totalPar}</div></div></div>`;
+  document.getElementById('totals-body').innerHTML=html;
 }
 
 function saveAndNew() {
-  const round = {
-    date: new Date().toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'}),
-    time: new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
-    course: COURSES[selectedCourse].name,
-    players: JSON.parse(JSON.stringify(activePlayers)),
-    scores: JSON.parse(JSON.stringify(scores)),
-    notes: JSON.parse(JSON.stringify(holeNotes))
-  };
-  savedRounds.unshift(round);
-
-  activePlayers.forEach((p, pi) => {
-    const total = scores[pi].reduce((s,v)=>s+(v||0),0);
-    const holesPlayed = scores[pi].filter(v=>v!==null).length;
-    if (holesPlayed === 0) return;
-    const existing = knownPlayers.find(kp => kp.name.toLowerCase() === p.name.toLowerCase());
-    if (existing) {
-      existing.rounds = (existing.rounds||0) + 1;
-      existing.totalScore = (existing.totalScore||0) + total;
-    } else {
-      knownPlayers.push({name: p.name, rounds: 1, totalScore: total});
-    }
+  const c=allCourses()[selectedCourse];
+  savedRounds.unshift({
+    date:new Date().toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'}),
+    time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+    courseName:c.name, coursePars:[...c.pars], holes:c.holes,
+    players:JSON.parse(JSON.stringify(activePlayers)),
+    scores:JSON.parse(JSON.stringify(scores)),
+    notes:JSON.parse(JSON.stringify(holeNotes))
   });
-
-  save();
-  activePlayers = [];
-  showScreen('setup');
+  activePlayers.forEach((p,pi)=>{
+    const total=scores[pi].reduce((s,v)=>s+(v||0),0);
+    const hp=scores[pi].filter(v=>v!==null).length;
+    if(!hp) return;
+    const ex=knownPlayers.find(kp=>kp.name.toLowerCase()===p.name.toLowerCase());
+    if(ex){ex.rounds++;ex.totalScore+=total;} else knownPlayers.push({name:p.name,rounds:1,totalScore:total});
+  });
+  save(); activePlayers=[]; showScreen('setup');
 }
 
 // ── HISTORY ──
 function renderHistory() {
-  const container = document.getElementById('history-body');
-  if (savedRounds.length === 0) {
-    container.innerHTML = '<div style="font-size:13px;color:var(--text-dim);padding:1rem 0;">No rounds saved yet.</div>';
-    return;
-  }
-  container.innerHTML = savedRounds.map((r,ri) => {
-    const ranked = r.players.map((p,i)=>({name:p.name,total:r.scores[i].reduce((s,v)=>s+(v||0),0)})).sort((a,b)=>a.total-b.total);
-    const w = ranked[0];
-    const ds = w.total - TOTAL_PAR;
-    const dsStr = ds===0?'E':ds>0?`+${ds}`:`${ds}`;
+  const cont=document.getElementById('history-body');
+  if(!savedRounds.length){cont.innerHTML='<div style="font-size:13px;color:var(--text-dim);padding:1rem 0;">No rounds saved yet.</div>';return;}
+  cont.innerHTML=savedRounds.map((r,ri)=>{
+    const pars=r.coursePars||new Array(r.holes||18).fill(3);
+    const tp=pars.reduce((s,v)=>s+v,0);
+    const ranked=r.players.map((p,i)=>({name:p.name,total:r.scores[i].reduce((s,v)=>s+(v||0),0)})).sort((a,b)=>a.total-b.total);
+    const w=ranked[0]; const ds=w.total-tp; const dss=ds===0?'E':ds>0?`+${ds}`:`${ds}`;
     return `<div class="round-card">
-      <div class="round-date">${r.date} · ${r.time}${r.course ? ' · ' + r.course : ''}</div>
+      <div class="round-date">${r.date} · ${r.time}${r.courseName?' · '+r.courseName:''}</div>
       <div class="round-players">${r.players.map(p=>p.name).join(', ')}</div>
-      <div class="round-winner">🏆 ${w.name} — ${w.total} (${dsStr})</div>
+      <div class="round-winner">🏆 ${w.name} — ${w.total} (${dss})</div>
       <div class="round-actions">
         <button class="small-btn" onclick="viewRound(${ri})">View</button>
         <button class="small-btn" onclick="exportCSV(${ri})">CSV</button>
@@ -630,125 +637,165 @@ function renderHistory() {
     </div>`;
   }).join('');
 }
-
-function viewRound(ri) {
-  renderTotals(savedRounds[ri]);
-  showScreen('totals');
-}
-
-function deleteRound(ri) {
-  savedRounds.splice(ri, 1);
-  save();
-  renderHistory();
-}
+function viewRound(ri){renderTotals(savedRounds[ri]);showScreen('totals');}
+function deleteRound(ri){savedRounds.splice(ri,1);save();renderHistory();}
 
 // ── PLAYERS ──
 function renderPlayers() {
-  const container = document.getElementById('players-body');
-  if (knownPlayers.length === 0) {
-    container.innerHTML = '<div style="font-size:13px;color:var(--text-dim);padding:1rem 0;">No players yet — finish a round to add them.</div>';
-    return;
-  }
-  const sorted = [...knownPlayers].map((p, origIdx) => ({...p, origIdx})).sort((a,b) => (a.totalScore/a.rounds) - (b.totalScore/b.rounds));
-  container.innerHTML = sorted.map((p, rank) => {
-    const avg = (p.totalScore / p.rounds).toFixed(1);
-    const avgDiff = (p.totalScore / p.rounds - TOTAL_PAR).toFixed(1);
-    const diffStr = parseFloat(avgDiff) === 0 ? 'E' : parseFloat(avgDiff) > 0 ? `+${avgDiff}` : avgDiff;
-    const diffClass = parseFloat(avgDiff) < 0 ? 'p-under' : parseFloat(avgDiff) > 0 ? 'p-over' : 'p-even';
+  const cont=document.getElementById('players-body');
+  if(!knownPlayers.length){cont.innerHTML='<div style="font-size:13px;color:var(--text-dim);padding:1rem 0;">No players yet — finish a round to add them.</div>';return;}
+  const sorted=[...knownPlayers].map((p,oi)=>({...p,oi})).sort((a,b)=>(a.totalScore/a.rounds)-(b.totalScore/b.rounds));
+  cont.innerHTML=sorted.map((p,rank)=>{
+    const avg=(p.totalScore/p.rounds).toFixed(1);
+    const ad=(p.totalScore/p.rounds-54).toFixed(1);
+    const ds=parseFloat(ad)===0?'E':parseFloat(ad)>0?`+${ad}`:ad;
+    const dc=parseFloat(ad)<0?'p-under':parseFloat(ad)>0?'p-over':'p-even';
     return `<div class="player-stat-card">
-      <div style="flex:1;">
-        <div class="ps-name">${rank===0?'🏆 ':''}${p.name}</div>
-        <div class="ps-meta">${p.rounds} round${p.rounds!==1?'s':''} · avg ${diffStr} par</div>
+      <div style="flex:1;"><div class="ps-name">${rank===0?'🏆 ':''}${p.name}</div><div class="ps-meta">${p.rounds} round${p.rounds!==1?'s':''} · avg ${ds} par</div></div>
+      <div style="text-align:right;margin-right:12px;"><div class="ps-avg ${dc}">${avg}</div><div class="ps-rounds">avg score</div></div>
+      <button class="small-btn danger" onclick="deletePlayer(${p.oi})" style="align-self:center;">Delete</button>
+    </div>`;
+  }).join('');
+}
+function deletePlayer(oi){knownPlayers.splice(oi,1);save();renderPlayers();}
+
+// ── CSV ──
+function exportCSV(ri) {
+  const c=allCourses()[selectedCourse];
+  const r=ri!==null?savedRounds[ri]:{players:activePlayers,scores,notes:holeNotes,courseName:c.name,coursePars:c.pars,holes:c.holes};
+  const holes=r.holes||r.scores[0].length;
+  const pars=r.coursePars||new Array(holes).fill(3);
+  let rows=[['Hole','Par',...r.players.map(p=>p.name),'Notes']];
+  for(let h=0;h<holes;h++){
+    const note=(r.notes&&r.notes[h])?r.notes[h].replace(/,/g,' '):'';
+    rows.push([h+1,pars[h],...r.players.map((p,pi)=>r.scores[pi][h]!==null?r.scores[pi][h]:''),note]);
+  }
+  rows.push(['Total',pars.reduce((s,v)=>s+v,0),...r.players.map((p,pi)=>r.scores[pi].reduce((s,v)=>s+(v||0),0)),'']);
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`dg-round-${Date.now()}.csv`;a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── COURSE CREATOR ──
+function setHoleCount(n) {
+  const isCustom = n==='custom';
+  document.getElementById('custom-hole-wrap').style.display = isCustom?'block':'none';
+  document.getElementById('hc-9').classList.toggle('selected', n===9);
+  document.getElementById('hc-18').classList.toggle('selected', n===18);
+  document.getElementById('hc-custom').classList.toggle('selected', isCustom);
+  if (!isCustom) {
+    creatorHoles = n;
+    while(creatorPars.length<creatorHoles) creatorPars.push(3);
+    creatorPars = creatorPars.slice(0, creatorHoles);
+    rebuildParGrid();
+  }
+}
+function onCustomHoleCount() {
+  const v=parseInt(document.getElementById('custom-hole-count').value);
+  if(v>=1&&v<=36){
+    creatorHoles=v;
+    while(creatorPars.length<creatorHoles) creatorPars.push(3);
+    creatorPars=creatorPars.slice(0,creatorHoles);
+    rebuildParGrid();
+  }
+}
+function setAllPar(p) { creatorPars=new Array(creatorHoles).fill(p); rebuildParGrid(); }
+function adjCreatorPar(h,d) { creatorPars[h]=Math.max(2,Math.min(7,creatorPars[h]+d)); rebuildParGrid(); }
+function rebuildParGrid() {
+  const grid=document.getElementById('par-grid');
+  grid.innerHTML='';
+  for(let h=0;h<creatorHoles;h++){
+    const cell=document.createElement('div');
+    cell.className='par-hole-cell';
+    cell.innerHTML=`
+      <div class="par-hole-num">Hole ${h+1}</div>
+      <div class="par-stepper">
+        <button class="par-step-btn" onclick="adjCreatorPar(${h},-1)">−</button>
+        <div class="par-val">${creatorPars[h]}</div>
+        <button class="par-step-btn" onclick="adjCreatorPar(${h},1)">+</button>
+      </div>`;
+    grid.appendChild(cell);
+  }
+}
+function saveCourse() {
+  const name=document.getElementById('new-course-name').value.trim();
+  if(!name){alert('Please enter a course name.');return;}
+  customCourses.push({name,holes:creatorHoles,pars:creatorPars.slice(0,creatorHoles),builtIn:false});
+  save();
+  selectedCourse=allCourses().length-1;
+  document.getElementById('new-course-name').value='';
+  creatorHoles=18; creatorPars=new Array(18).fill(3);
+  setHoleCount(18);
+  renderCoursesScreen();
+}
+function deleteCustomCourse(ci) {
+  customCourses.splice(ci,1);
+  if(selectedCourse>=allCourses().length) selectedCourse=0;
+  save(); renderCoursesScreen();
+}
+function selectCourseAndGo(i) { selectedCourse=i; showScreen('setup'); }
+
+function renderCoursesScreen() {
+  rebuildParGrid();
+  const list=document.getElementById('courses-list');
+  list.innerHTML=allCourses().map((c,i)=>{
+    const tp=c.pars.reduce((s,v)=>s+v,0);
+    const desc=c.pars.every(p=>p===c.pars[0])?`All Par ${c.pars[0]}`:`Par ${Math.min(...c.pars)}–${Math.max(...c.pars)}`;
+    const ci=c.builtIn?-1:i-BUILTIN_COURSES.length;
+    return `<div class="courses-list-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div><div class="courses-list-title">${c.name}</div><div class="courses-list-meta">${c.holes} holes · ${desc} · Total Par ${tp}</div></div>
+        ${c.builtIn?'<span class="builtin-tag">built-in</span>':''}
       </div>
-      <div class="ps-stat" style="margin-right:12px;">
-        <div class="ps-avg ${diffClass}">${avg}</div>
-        <div class="ps-rounds">avg score</div>
+      <div class="courses-list-actions">
+        <button class="small-btn" onclick="selectCourseAndGo(${i})">Select for round</button>
+        ${!c.builtIn?`<button class="small-btn danger" onclick="deleteCustomCourse(${ci})">Delete</button>`:''}
       </div>
-      <button class="small-btn danger" onclick="deletePlayer(${p.origIdx})" style="align-self:center;">Delete</button>
     </div>`;
   }).join('');
 }
 
-function deletePlayer(origIdx) {
-  knownPlayers.splice(origIdx, 1);
-  save();
-  renderPlayers();
-}
-
-// ── CSV EXPORT ──
-function exportCSV(ri) {
-  const r = ri !== null ? savedRounds[ri] : {players: activePlayers, scores, notes: holeNotes, course: COURSES[selectedCourse].name, date: new Date().toLocaleDateString()};
-  let rows = [['Hole','Par',...r.players.map(p=>p.name),'Notes']];
-  for (let h=0; h<HOLES; h++) {
-    const note = (r.notes && r.notes[h]) ? r.notes[h].replace(/,/g,' ') : '';
-    rows.push([h+1, PAR, ...r.players.map((p,pi)=>r.scores[pi][h]!==null?r.scores[pi][h]:''), note]);
-  }
-  rows.push(['Total', TOTAL_PAR, ...r.players.map((p,pi)=>r.scores[pi].reduce((s,v)=>s+(v||0),0)), '']);
-  const csv = rows.map(r=>r.join(',')).join('\n');
-  const blob = new Blob([csv],{type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download=`dg-round-${Date.now()}.csv`; a.click();
-  URL.revokeObjectURL(url);
-}
-
 // ── DISTANCE ──
-function toRad(d) { return d * Math.PI / 180; }
-function calcFeet(lat1,lon1,lat2,lon2) {
-  const R=20902231, dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
-  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+function toRad(d){return d*Math.PI/180;}
+function calcFeet(la1,lo1,la2,lo2){
+  const R=20902231,dL=toRad(la2-la1),dO=toRad(lo2-lo1);
+  const a=Math.sin(dL/2)**2+Math.cos(toRad(la1))*Math.cos(toRad(la2))*Math.sin(dO/2)**2;
   return Math.round(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
 }
-
-function setGPS(mode) {
-  const dot=document.getElementById('gps-dot'), lbl=document.getElementById('gps-lbl');
+function setGPS(mode){
+  const dot=document.getElementById('gps-dot'),lbl=document.getElementById('gps-lbl');
   dot.className='dot';
-  if (mode==='ready'){dot.classList.add('ready');lbl.textContent='GPS ready — mark your throw start';document.getElementById('live-dist-box').style.display='none';}
-  else if (mode==='tracking'){dot.classList.add('tracking');lbl.textContent='Start marked — walk to disc';document.getElementById('live-dist-box').style.display='block';}
+  if(mode==='ready'){dot.classList.add('ready');lbl.textContent='GPS ready — mark your throw start';document.getElementById('live-dist-box').style.display='none';}
+  else if(mode==='tracking'){dot.classList.add('tracking');lbl.textContent='Start marked — walk to disc';document.getElementById('live-dist-box').style.display='block';}
   else lbl.textContent='Acquiring GPS...';
 }
-
-function showErr(msg) {
-  const bar=document.getElementById('err-bar');
-  bar.textContent=msg; bar.style.display='block';
-  setTimeout(()=>bar.style.display='none', 5000);
-}
-
-function markStart() {
-  if (!currentPos){showErr('GPS not ready yet.');return;}
+function showErr(msg){const b=document.getElementById('err-bar');b.textContent=msg;b.style.display='block';setTimeout(()=>b.style.display='none',5000);}
+function markStart(){
+  if(!currentPos){showErr('GPS not ready yet.');return;}
   startCoords={lat:currentPos.coords.latitude,lon:currentPos.coords.longitude};
   setGPS('tracking');
   document.getElementById('btn-start').disabled=true;
   document.getElementById('btn-end').disabled=false;
 }
-
-function markEnd() {
-  if (!currentPos||!startCoords) return;
+function markEnd(){
+  if(!currentPos||!startCoords)return;
   const feet=calcFeet(startCoords.lat,startCoords.lon,currentPos.coords.latitude,currentPos.coords.longitude);
   const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
   throws.push({feet,time});
   throws.sort((a,b)=>b.feet-a.feet);
   throws=throws.slice(0,5);
-  save();
-  startCoords=null;
-  renderThrows();
-  setGPS('ready');
+  save(); startCoords=null; renderThrows(); setGPS('ready');
   document.getElementById('btn-end').disabled=true;
   document.getElementById('btn-start').disabled=false;
 }
-
-function clearThrows() {
-  throws=[];
-  save();
-  renderThrows();
-}
-
-function renderThrows() {
-  document.getElementById('d-last').textContent = throws.length ? throws[0].feet.toLocaleString() : '—';
-  const best = throws.length ? throws[0].feet : null;
-  document.getElementById('d-best').textContent = best ? best.toLocaleString() : '—';
+function clearThrows(){throws=[];save();renderThrows();}
+function renderThrows(){
+  document.getElementById('d-last').textContent=throws.length?throws[0].feet.toLocaleString():'—';
+  document.getElementById('d-best').textContent=throws.length?throws[0].feet.toLocaleString():'—';
   const list=document.getElementById('throw-list');
-  if (!throws.length){list.innerHTML='<div style="font-size:13px;color:var(--text-dim);padding:10px 0;">No throws yet.</div>';return;}
+  if(!throws.length){list.innerHTML='<div style="font-size:13px;color:var(--text-dim);padding:10px 0;">No throws yet.</div>';return;}
   list.innerHTML=throws.map((t,i)=>`
     <div class="throw-row">
       <div style="display:flex;align-items:center;gap:10px;">
@@ -762,34 +809,22 @@ function renderThrows() {
       </div>
     </div>`).join('');
 }
-
-// ── GPS WATCHER ──
-if (navigator.geolocation) {
+if(navigator.geolocation){
   navigator.geolocation.watchPosition(
-    pos => {
+    pos=>{
       currentPos=pos;
-      if (!gpsReady){
-        gpsReady=true;
-        setGPS('ready');
-        document.getElementById('btn-start').disabled=false;
-      }
-      if (startCoords) {
-        const live=calcFeet(startCoords.lat,startCoords.lon,pos.coords.latitude,pos.coords.longitude);
-        document.getElementById('d-live').textContent=live.toLocaleString();
-      }
+      if(!gpsReady){gpsReady=true;setGPS('ready');document.getElementById('btn-start').disabled=false;}
+      if(startCoords){const live=calcFeet(startCoords.lat,startCoords.lon,pos.coords.latitude,pos.coords.longitude);document.getElementById('d-live').textContent=live.toLocaleString();}
     },
-    err => {
-      if(err.code===1) showErr('Location access denied. Enable location in browser settings.');
-      else showErr('GPS error — go outdoors and reload.');
-    },
+    err=>{if(err.code===1)showErr('Location access denied.');else showErr('GPS error — go outdoors and reload.');},
     {enableHighAccuracy:true,maximumAge:2000,timeout:15000}
   );
-} else {
-  showErr('Geolocation not supported by this browser.');
-}
+}else{showErr('Geolocation not supported.');}
 
 // ── INIT ──
 load();
+creatorPars=new Array(18).fill(3);
+rebuildParGrid();
 renderSetup();
 renderThrows();
 </script>
