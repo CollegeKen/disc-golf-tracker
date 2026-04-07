@@ -774,10 +774,28 @@ function setGPS(mode){
 function showErr(msg){const b=document.getElementById('err-bar');b.textContent=msg;b.style.display='block';setTimeout(()=>b.style.display='none',5000);}
 function markStart(){
   if(!currentPos){showErr('GPS not ready yet.');return;}
-  startCoords={lat:currentPos.coords.latitude,lon:currentPos.coords.longitude};
-  setGPS('tracking');
-  document.getElementById('btn-start').disabled=true;
-  document.getElementById('btn-end').disabled=false;
+  
+  document.getElementById('btn-start').disabled = true;
+  document.getElementById('btn-start').textContent = 'Locking GPS...'
+  
+  const samples =[];
+  const interval = setInterval(() => {
+	if(currentPos) samples.push({
+		lat:currentPos.coords.latitude,
+		lon:currentPos.coords.longitude
+	});
+		
+	if(samples.length >= 5) {
+		clearInterval(interval);
+		startCoords = {
+			lat: samples.reduce((s, p) => s + p.lat, 0) / samples.length,
+			lon: samples.reduce((s, p) => s + p.lon, 0) / samples.lenght
+	};
+	document.getElementById('btn-start').textContent = 'Mark Throw Start';
+	setGPS('tracking');
+	document.getElementById('btn-end').disabled = false;
+		}
+	}, 400);
 }
 function markEnd(){
   if(!currentPos||!startCoords)return;
