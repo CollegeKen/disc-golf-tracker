@@ -223,6 +223,7 @@
   <div class="notes-strip">
     <span class="notes-badge" id="notes-preview">no notes</span>
     <button class="note-edit-btn" onclick="openNoteModal()">📝 Note</button>
+	<button class="note-edit-btn" onclick="openDistModal()">📏 Dist</button>
   </div>
   <div class="players-scroll" id="players-scroll"></div>
   <div class="score-footer">
@@ -351,6 +352,34 @@
   <div style="flex:1;overflow-y:auto;padding:0 1.25rem 1rem;" id="throw-list"></div>
 </div>
 
+<!-- ══ DISTANCE MODAL ══ -->
+<div class="modal-overlay" id="dist-modal" onclick="handleDistModalBgClick(event)">
+  <div class="modal-sheet">
+    <div>
+      <div class="modal-title" id="dist-modal-title">Hole 1 — Distance</div>
+      <div class="modal-subtitle" id="dist-modal-subtitle">Mark start then walk to basket</div>
+    </div>
+    <div style="display:flex;gap:1px;background:var(--border);border-radius:5px;overflow:hidden;margin:4px 0;">
+      <div style="flex:1;background:var(--bg);padding:14px;text-align:center;">
+        <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Distance</div>
+        <div style="font-family:var(--font-d);font-size:2.8rem;color:var(--accent);" id="hole-dist-display">—</div>
+        <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;">feet</div>
+      </div>
+      <div style="flex:1;background:var(--bg);padding:14px;text-align:center;">
+        <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Live</div>
+        <div style="font-family:var(--font-d);font-size:2.8rem;color:var(--yellow);" id="hole-live-display">—</div>
+        <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;">feet</div>
+      </div>
+    </div>
+    <div id="hole-gps-bar" style="font-size:12px;color:var(--text-muted);padding:4px 0;">Waiting for GPS...</div>
+    <div class="modal-actions">
+      <button class="btn btn-green" id="hole-dist-start-btn" onclick="holeDistMarkStart()" style="flex:2;font-size:1rem;padding:0.75rem;">Mark Start</button>
+      <button class="btn btn-red"   id="hole-dist-end-btn"   onclick="holeDistMarkEnd()"   style="flex:2;font-size:1rem;padding:0.75rem;" disabled>Mark End</button>
+    </div>
+    <button class="btn btn-ghost" style="font-size:1rem;padding:0.75rem;" onclick="closeDistModal()">Close</button>
+  </div>
+</div>
+
 <!-- ══ NOTES MODAL ══ -->
 <div class="modal-overlay" id="note-modal" onclick="handleModalBgClick(event)">
   <div class="modal-sheet">
@@ -358,10 +387,10 @@
       <div class="modal-title" id="modal-hole-title">Hole 1 — Note</div>
       <div class="modal-subtitle" id="modal-course-subtitle">Course</div>
     </div>
-	<div style="position:relative;">
-		<textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Drive from T with Blue Destroyer..."></textarea>
-		<button id="mic-btn" onclick="toggleMic()" style="position:absolute;bottom:8px;right:8px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:18px;padding:4px 8px;cursor:pointer;-webkit-tap-highlight-color:transparent;">🎤</button>
-	</div>
+    <div style="position:relative;">
+      <textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Watch out for the big tree on the left..."></textarea>
+      <button id="mic-btn" onclick="toggleMic()" style="position:absolute;bottom:8px;right:8px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:18px;padding:4px 8px;cursor:pointer;-webkit-tap-highlight-color:transparent;">🎤</button>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:1;font-size:1rem;padding:0.75rem;" onclick="closeNoteModal()">Cancel</button>
       <button class="btn btn-green" style="flex:2;font-size:1rem;padding:0.75rem;" onclick="saveNote()">Save Note</button>
@@ -383,8 +412,6 @@
 // ── BUILT-INS ──
 const BUILTIN_COURSES = [
   { name: 'Coachman Park',       holes: 18, pars: new Array(18).fill(3), builtIn: true },
-  { name: 'Cliff Stephens Park', holes: 18, pars: new Array(18).fill(3), builtIn: true },
-  { name: 'Taylor Park',         holes: 18, pars: new Array(18).fill(3), builtIn: true },
 ];
 
 // ── STATE ──
@@ -601,6 +628,71 @@ function toggleMic() {
     document.getElementById('mic-btn').style.borderColor = 'var(--border)';
   };
   micRecognition.start();
+}
+
+let holeDistStart = null;
+let holeDistWatcher = null;
+
+function openDistModal() {
+  document.getElementById('dist-modal-title').textContent = `Hole ${currentHole + 1} — Distance`;
+  document.getElementById('hole-dist-display').textContent = '—';
+  document.getElementById('hole-live-display').textContent = '—';
+  document.getElementById('hole-dist-start-btn').disabled = !gpsReady;
+  document.getElementById('hole-dist-end-btn').disabled = true;
+  document.getElementById('hole-gps-bar').textContent = gpsReady ? 'GPS ready' : 'Waiting for GPS...';
+  holeDistStart = null;
+  document.getElementById('dist-modal').classList.add('open');
+
+  // Live updates inside the modal
+  holeDistWatcher = setInterval(() => {
+    if (holeDistStart && currentPos) {
+      const live = calcFeet(holeDistStart.lat, holeDistStart.lon,
+        currentPos.coords.latitude, currentPos.coords.longitude);
+      document.getElementById('hole-live-display').textContent = live.toLocaleString();
+    }
+  }, 500);
+}
+
+function closeDistModal() {
+  clearInterval(holeDistWatcher);
+  holeDistWatcher = null;
+  holeDistStart = null;
+  document.getElementById('dist-modal').classList.remove('open');
+}
+
+function handleDistModalBgClick(e) {
+  if (e.target === document.getElementById('dist-modal')) closeDistModal();
+}
+
+function holeDistMarkStart() {
+  if (!currentPos) return;
+  // Average 5 samples just like the main tracker
+  document.getElementById('hole-dist-start-btn').disabled = true;
+  document.getElementById('hole-gps-bar').textContent = 'Locking GPS...';
+  const samples = [];
+  const iv = setInterval(() => {
+    if (currentPos) samples.push({ lat: currentPos.coords.latitude, lon: currentPos.coords.longitude });
+    if (samples.length >= 5) {
+      clearInterval(iv);
+      holeDistStart = {
+        lat: samples.reduce((s, p) => s + p.lat, 0) / samples.length,
+        lon: samples.reduce((s, p) => s + p.lon, 0) / samples.length
+      };
+      document.getElementById('hole-gps-bar').textContent = 'Start marked — walk to the basket';
+      document.getElementById('hole-dist-end-btn').disabled = false;
+    }
+  }, 400);
+}
+
+function holeDistMarkEnd() {
+  if (!currentPos || !holeDistStart) return;
+  const feet = calcFeet(holeDistStart.lat, holeDistStart.lon,
+    currentPos.coords.latitude, currentPos.coords.longitude);
+  document.getElementById('hole-dist-display').textContent = feet.toLocaleString();
+  document.getElementById('hole-gps-bar').textContent = `Measured — ${feet.toLocaleString()} ft`;
+  document.getElementById('hole-dist-end-btn').disabled = true;
+  document.getElementById('hole-dist-start-btn').disabled = false;
+  holeDistStart = null;
 }
 
 // ── TOTALS ──
