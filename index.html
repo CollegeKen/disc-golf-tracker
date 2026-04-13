@@ -335,9 +335,15 @@
   </div>
   <div class="err-bar" id="err-bar"></div>
   <div class="dist-controls">
-    <button class="btn btn-green" id="btn-start" disabled onclick="markStart()">Mark Throw Start</button>
-    <button class="btn btn-red"   id="btn-end"   disabled onclick="markEnd()">Mark Disc Landing</button>
+  <div>
+    <div class="field-label" style="margin-bottom:6px;">Disc</div>
+    <input class="text-input" id="disc-name-input" type="text" maxlength="30"
+      placeholder="Enter disc name before measuring"
+      oninput="onDiscNameInput()" />
   </div>
+  <button class="btn btn-green" id="btn-start" disabled onclick="markStart()">Mark Throw Start</button>
+  <button class="btn btn-red"   id="btn-end"   disabled onclick="markEnd()">Mark Disc Landing</button>
+</div>
   <div style="padding:0 1.25rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0;">
     <span style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);">Top 5 throws</span>
     <button class="small-btn" onclick="clearThrows()">Clear all</button>
@@ -352,7 +358,10 @@
       <div class="modal-title" id="modal-hole-title">Hole 1 — Note</div>
       <div class="modal-subtitle" id="modal-course-subtitle">Course</div>
     </div>
-    <textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Watch out for the big tree on the left..."></textarea>
+	<div style="position:relative;">
+		<textarea class="notes-textarea" id="note-textarea" placeholder="e.g. Drive from T with Blue Destroyer..."></textarea>
+		<button id="mic-btn" onclick="toggleMic()" style="position:absolute;bottom:8px;right:8px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:18px;padding:4px 8px;cursor:pointer;-webkit-tap-highlight-color:transparent;">🎤</button>
+	</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" style="flex:1;font-size:1rem;padding:0.75rem;" onclick="closeNoteModal()">Cancel</button>
       <button class="btn btn-green" style="flex:2;font-size:1rem;padding:0.75rem;" onclick="saveNote()">Save Note</button>
@@ -552,6 +561,47 @@ function openNoteModal() {
 function closeNoteModal() { document.getElementById('note-modal').classList.remove('open'); }
 function saveNote() { holeNotes[currentHole]=document.getElementById('note-textarea').value.trim(); closeNoteModal(); renderScoring(); }
 function handleModalBgClick(e) { if(e.target===document.getElementById('note-modal')) closeNoteModal(); }
+
+let micRecognition = null;
+let micActive = false;
+
+function toggleMic() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Speech recognition not supported in this browser. Try Chrome on Android.');
+    return;
+  }
+  if (micActive) {
+    micRecognition.stop();
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  micRecognition = new SR();
+  micRecognition.continuous = false;
+  micRecognition.interimResults = false;
+  micRecognition.lang = 'en-US';
+
+  micRecognition.onstart = () => {
+    micActive = true;
+    document.getElementById('mic-btn').textContent = '🔴';
+    document.getElementById('mic-btn').style.borderColor = 'var(--red-dim)';
+  };
+  micRecognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    const ta = document.getElementById('note-textarea');
+    ta.value = ta.value ? ta.value + ' ' + transcript : transcript;
+  };
+  micRecognition.onend = () => {
+    micActive = false;
+    document.getElementById('mic-btn').textContent = '🎤';
+    document.getElementById('mic-btn').style.borderColor = 'var(--border)';
+  };
+  micRecognition.onerror = () => {
+    micActive = false;
+    document.getElementById('mic-btn').textContent = '🎤';
+    document.getElementById('mic-btn').style.borderColor = 'var(--border)';
+  };
+  micRecognition.start();
+}
 
 // ── TOTALS ──
 function goTotals() { renderTotals(null); showScreen('totals'); }
@@ -774,34 +824,25 @@ function setGPS(mode){
 function showErr(msg){const b=document.getElementById('err-bar');b.textContent=msg;b.style.display='block';setTimeout(()=>b.style.display='none',5000);}
 function markStart(){
   if(!currentPos){showErr('GPS not ready yet.');return;}
-  
-  document.getElementById('btn-start').disabled = true;
-  document.getElementById('btn-start').textContent = 'Locking GPS...'
-  
-  const samples =[];
-  const interval = setInterval(() => {
-	if(currentPos) samples.push({
-		lat:currentPos.coords.latitude,
-		lon:currentPos.coords.longitude
-	});
-		
-	if(samples.length >= 5) {
-		clearInterval(interval);
-		startCoords = {
-			lat: samples.reduce((s, p) => s + p.lat, 0) / samples.length,
-			lon: samples.reduce((s, p) => s + p.lon, 0) / samples.lenght
-	};
-	document.getElementById('btn-start').textContent = 'Mark Throw Start';
-	setGPS('tracking');
-	document.getElementById('btn-end').disabled = false;
-		}
-	}, 400);
+  startCoords={lat:currentPos.coords.latitude,lon:currentPos.coords.longitude};
+  setGPS('tracking');
+  document.getElementById('btn-start').disabled=true;
+  document.getElementById('btn-end').disabled=false;
+}
+function onDiscNameInput() {
+  const hasName = document.getElementById('disc-name-input').value.trim().length > 0;
+  if (!micActive && gpsReady && hasName) {
+    document.getElementById('btn-start').disabled = false;
+  } else if (!hasName) {
+    document.getElementById('btn-start').disabled = true;
+  }
 }
 function markEnd(){
   if(!currentPos||!startCoords)return;
   const feet=calcFeet(startCoords.lat,startCoords.lon,currentPos.coords.latitude,currentPos.coords.longitude);
   const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  throws.push({feet,time});
+  const disc = document.getElementById('disc-name-input').value.trim();
+  throws.push({feet, time, disc});
   throws.sort((a,b)=>b.feet-a.feet);
   throws=throws.slice(0,5);
   save(); startCoords=null; renderThrows(); setGPS('ready');
@@ -819,6 +860,7 @@ function renderThrows(){
       <div style="display:flex;align-items:center;gap:10px;">
         <span style="font-family:var(--font-d);font-size:1rem;color:var(--text-dim);width:16px;">#${i+1}</span>
         <span class="throw-feet">${t.feet.toLocaleString()}</span>
+		${t.disc ? `<span style="font-size:11px;color:var(--text-muted);margin-left:4px;">${t.disc}</span>` : ''}
         <span style="font-size:11px;color:var(--text-dim);">ft</span>
       </div>
       <div style="text-align:right;">
