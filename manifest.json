@@ -1,7 +1,7 @@
 {
   "name": "Next Best Throw",
   "short_name": "NBT",
-  "start_url": "/",
+  "start_url": "https://CollegeKen.github.io/disc-golf-tracker",
   "display": "standalone",
   "background_color": "#0f1a0f",
   "theme_color": "#0f1a0f",
