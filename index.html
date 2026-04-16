@@ -9,7 +9,6 @@
   <meta name="apple-mobile-web-app-title" content="Next Best Throw" />
   <title>Next Best Throw</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <link rel="manifest" href="manifest.json" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -377,6 +376,10 @@
       <button class="btn btn-green" id="hole-dist-start-btn" onclick="holeDistMarkStart()" style="flex:2;font-size:1rem;padding:0.75rem;">Mark Start</button>
       <button class="btn btn-red"   id="hole-dist-end-btn"   onclick="holeDistMarkEnd()"   style="flex:2;font-size:1rem;padding:0.75rem;" disabled>Mark End</button>
     </div>
+	<div>
+		<div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Top drives — this hole</div>
+		<div id="hole-records-list"></div>
+	</div>
     <button class="btn btn-ghost" style="font-size:1rem;padding:0.75rem;" onclick="closeDistModal()">Close</button>
   </div>
 </div>
@@ -428,6 +431,7 @@ let throws         = [];
 let startCoords    = null;
 let currentPos     = null;
 let gpsReady       = false;
+let holeRecords    = {};
 
 // Creator
 let creatorHoles = 18;
@@ -440,12 +444,14 @@ function load() {
   try { knownPlayers  = JSON.parse(localStorage.getItem('dg_players')  || '[]'); } catch(e) { knownPlayers = []; }
   try { throws        = JSON.parse(localStorage.getItem('dg_throws')   || '[]'); } catch(e) { throws = []; }
   try { customCourses = JSON.parse(localStorage.getItem('dg_courses')  || '[]'); } catch(e) { customCourses = []; }
+  try { holeRecords = JSON.parse(localStorage.getItem('dg_hole_records') || '{}'); } catch(e) { holeRecords = {}; }
 }
 function save() {
   try { localStorage.setItem('dg_rounds',  JSON.stringify(savedRounds));   } catch(e) {}
   try { localStorage.setItem('dg_players', JSON.stringify(knownPlayers));  } catch(e) {}
   try { localStorage.setItem('dg_throws',  JSON.stringify(throws));        } catch(e) {}
   try { localStorage.setItem('dg_courses', JSON.stringify(customCourses)); } catch(e) {}
+  try { localStorage.setItem('dg_hole_records', JSON.stringify(holeRecords)); } catch(e) {}
 }
 
 // ── SCREENS ──
@@ -652,6 +658,7 @@ function openDistModal() {
       document.getElementById('hole-live-display').textContent = live.toLocaleString();
     }
   }, 500);
+  renderHoleRecords();
 }
 
 function closeDistModal() {
@@ -689,11 +696,39 @@ function holeDistMarkEnd() {
   if (!currentPos || !holeDistStart) return;
   const feet = calcFeet(holeDistStart.lat, holeDistStart.lon,
     currentPos.coords.latitude, currentPos.coords.longitude);
+
+  // Save to per-course per-hole records
+  const course = allCourses()[selectedCourse];
+  const key = `${course.name}__${currentHole}`;
+  if (!holeRecords[key]) holeRecords[key] = [];
+  holeRecords[key].push(feet);
+  holeRecords[key].sort((a, b) => b - a);
+  holeRecords[key] = holeRecords[key].slice(0, 5);
+  save();
+
   document.getElementById('hole-dist-display').textContent = feet.toLocaleString();
   document.getElementById('hole-gps-bar').textContent = `Measured — ${feet.toLocaleString()} ft`;
   document.getElementById('hole-dist-end-btn').disabled = true;
   document.getElementById('hole-dist-start-btn').disabled = false;
   holeDistStart = null;
+  renderHoleRecords();
+}
+
+function renderHoleRecords() {
+  const course = allCourses()[selectedCourse];
+  const key = `${course.name}__${currentHole}`;
+  const records = holeRecords[key] || [];
+  const container = document.getElementById('hole-records-list');
+  if (!records.length) {
+    container.innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:6px 0;">No drives recorded yet.</div>';
+    return;
+  }
+  container.innerHTML = records.map((r, i) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);">
+      <span style="font-family:var(--font-d);font-size:1rem;color:var(--text-dim);width:20px;">#${i+1}</span>
+      <span style="font-family:var(--font-d);font-size:1.6rem;color:${i===0?'var(--accent)':'var(--text)'};">${r.toLocaleString()}</span>
+      <span style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;">ft</span>
+    </div>`).join('');
 }
 
 // ── TOTALS ──
