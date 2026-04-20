@@ -631,7 +631,7 @@ function toggleMic() {
   }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   micRecognition = new SR();
-  micRecognition.continuous = false;
+  micRecognition.continuous = true;
   micRecognition.interimResults = false;
   micRecognition.lang = 'en-US';
 
