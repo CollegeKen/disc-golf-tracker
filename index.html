@@ -427,8 +427,10 @@ let throws         = [];
 let startCoords    = null;
 let currentPos     = null;
 let gpsReady       = false;
+let holeDistStart = null;
+let holeDistWatcher = null;
 let holeRecords    = {};
-Let courseNotes = {};
+let courseNotes    = {};
 
 // Creator
 let creatorHoles = 18;
@@ -503,8 +505,11 @@ function renderSetup() {
 }
 
 function selectCourse(i) { selectedCourse = i; renderSetup(); }
+
 function addPlayerRow() { if (activePlayers.length < 4) { activePlayers.push({name:''}); renderSetup(); } }
+
 function removePlayerRow(i) { activePlayers.splice(i,1); renderSetup(); }
+
 function addSavedPlayer(name) {
   if (activePlayers.length >= 4) return;
   const ei = activePlayers.findIndex(p => !p.name.trim());
@@ -653,9 +658,6 @@ function toggleMic() {
   micRecognition.start();
 }
 
-let holeDistStart = null;
-let holeDistWatcher = null;
-
 function openDistModal() {
   document.getElementById('dist-modal-title').textContent = `Hole ${currentHole + 1} — Distance`;
   document.getElementById('hole-dist-display').textContent = '—';
@@ -802,7 +804,9 @@ function renderHistory() {
     </div>`;
   }).join('');
 }
+
 function viewRound(ri){renderTotals(savedRounds[ri]);showScreen('totals');}
+
 function deleteRound(ri){savedRounds.splice(ri,1);save();renderHistory();}
 
 // ── PLAYERS ──
@@ -936,7 +940,9 @@ function setGPS(mode){
   else if(mode==='tracking'){dot.classList.add('tracking');lbl.textContent='Start marked — walk to disc';document.getElementById('live-dist-box').style.display='block';}
   else lbl.textContent='Acquiring GPS...';
 }
+
 function showErr(msg){const b=document.getElementById('err-bar');b.textContent=msg;b.style.display='block';setTimeout(()=>b.style.display='none',5000);}
+
 function markStart(){
   if(!currentPos){showErr('GPS not ready yet.');return;}
   startCoords={lat:currentPos.coords.latitude,lon:currentPos.coords.longitude};
@@ -944,6 +950,7 @@ function markStart(){
   document.getElementById('btn-start').disabled=true;
   document.getElementById('btn-end').disabled=false;
 }
+
 function onDiscNameInput() {
   const hasName = document.getElementById('disc-name-input').value.trim().length > 0;
   if (!micActive && gpsReady && hasName) {
