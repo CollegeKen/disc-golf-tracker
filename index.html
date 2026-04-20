@@ -376,10 +376,6 @@
       <button class="btn btn-green" id="hole-dist-start-btn" onclick="holeDistMarkStart()" style="flex:2;font-size:1rem;padding:0.75rem;">Mark Start</button>
       <button class="btn btn-red"   id="hole-dist-end-btn"   onclick="holeDistMarkEnd()"   style="flex:2;font-size:1rem;padding:0.75rem;" disabled>Mark End</button>
     </div>
-	<div>
-		<div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Top drives — this hole</div>
-		<div id="hole-records-list"></div>
-	</div>
     <button class="btn btn-ghost" style="font-size:1rem;padding:0.75rem;" onclick="closeDistModal()">Close</button>
   </div>
 </div>
@@ -432,6 +428,7 @@ let startCoords    = null;
 let currentPos     = null;
 let gpsReady       = false;
 let holeRecords    = {};
+Let courseNotes = {};
 
 // Creator
 let creatorHoles = 18;
@@ -445,6 +442,7 @@ function load() {
   try { throws        = JSON.parse(localStorage.getItem('dg_throws')   || '[]'); } catch(e) { throws = []; }
   try { customCourses = JSON.parse(localStorage.getItem('dg_courses')  || '[]'); } catch(e) { customCourses = []; }
   try { holeRecords = JSON.parse(localStorage.getItem('dg_hole_records') || '{}'); } catch(e) { holeRecords = {}; }
+  try { courseNotes = JSON.parse(localStorage.getItem('dg_course_notes') || '{}'); } catch(e) { courseNotes = {}; }
 }
 function save() {
   try { localStorage.setItem('dg_rounds',  JSON.stringify(savedRounds));   } catch(e) {}
@@ -452,6 +450,7 @@ function save() {
   try { localStorage.setItem('dg_throws',  JSON.stringify(throws));        } catch(e) {}
   try { localStorage.setItem('dg_courses', JSON.stringify(customCourses)); } catch(e) {}
   try { localStorage.setItem('dg_hole_records', JSON.stringify(holeRecords)); } catch(e) {}
+  try { localStorage.setItem('dg_course_notes', JSON.stringify(courseNotes)); } catch(e) {}
 }
 
 // ── SCREENS ──
@@ -512,11 +511,16 @@ function addSavedPlayer(name) {
   if (ei !== -1) activePlayers[ei].name = name; else activePlayers.push({name});
   renderSetup();
 }
+
 function startRound() {
   const c = allCourses()[selectedCourse];
-  activePlayers = activePlayers.map((p,i)=>({name:p.name.trim()||`Player ${i+1}`}));
-  scores    = activePlayers.map(()=>new Array(c.holes).fill(null));
-  holeNotes = new Array(c.holes).fill('');
+  activePlayers = activePlayers.map((p,i) => ({name: p.name.trim() || `Player ${i+1}`}));
+  scores    = activePlayers.map(() => new Array(c.holes).fill(null));
+  // Load any saved course notes, fall back to empty string
+  holeNotes = Array.from({length: c.holes}, (_, h) => {
+    const key = `${c.name}__${h}`;
+    return courseNotes[key] || '';
+  });
   currentHole = 0;
   showScreen('scoring');
 }
@@ -593,7 +597,19 @@ function openNoteModal() {
   setTimeout(()=>document.getElementById('note-textarea').focus(),200);
 }
 function closeNoteModal() { document.getElementById('note-modal').classList.remove('open'); }
-function saveNote() { holeNotes[currentHole]=document.getElementById('note-textarea').value.trim(); closeNoteModal(); renderScoring(); }
+
+function saveNote() {
+  const note = document.getElementById('note-textarea').value.trim();
+  holeNotes[currentHole] = note;
+  // Save permanently to the course
+  const c = allCourses()[selectedCourse];
+  const key = `${c.name}__${currentHole}`;
+  courseNotes[key] = note;
+  save();
+  closeNoteModal();
+  renderScoring();
+}
+
 function handleModalBgClick(e) { if(e.target===document.getElementById('note-modal')) closeNoteModal(); }
 
 let micRecognition = null;
@@ -658,7 +674,6 @@ function openDistModal() {
       document.getElementById('hole-live-display').textContent = live.toLocaleString();
     }
   }, 500);
-  renderHoleRecords();
 }
 
 function closeDistModal() {
@@ -696,39 +711,11 @@ function holeDistMarkEnd() {
   if (!currentPos || !holeDistStart) return;
   const feet = calcFeet(holeDistStart.lat, holeDistStart.lon,
     currentPos.coords.latitude, currentPos.coords.longitude);
-
-  // Save to per-course per-hole records
-  const course = allCourses()[selectedCourse];
-  const key = `${course.name}__${currentHole}`;
-  if (!holeRecords[key]) holeRecords[key] = [];
-  holeRecords[key].push(feet);
-  holeRecords[key].sort((a, b) => b - a);
-  holeRecords[key] = holeRecords[key].slice(0, 5);
-  save();
-
   document.getElementById('hole-dist-display').textContent = feet.toLocaleString();
   document.getElementById('hole-gps-bar').textContent = `Measured — ${feet.toLocaleString()} ft`;
   document.getElementById('hole-dist-end-btn').disabled = true;
   document.getElementById('hole-dist-start-btn').disabled = false;
   holeDistStart = null;
-  renderHoleRecords();
-}
-
-function renderHoleRecords() {
-  const course = allCourses()[selectedCourse];
-  const key = `${course.name}__${currentHole}`;
-  const records = holeRecords[key] || [];
-  const container = document.getElementById('hole-records-list');
-  if (!records.length) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--text-dim);padding:6px 0;">No drives recorded yet.</div>';
-    return;
-  }
-  container.innerHTML = records.map((r, i) => `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);">
-      <span style="font-family:var(--font-d);font-size:1rem;color:var(--text-dim);width:20px;">#${i+1}</span>
-      <span style="font-family:var(--font-d);font-size:1.6rem;color:${i===0?'var(--accent)':'var(--text)'};">${r.toLocaleString()}</span>
-      <span style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;">ft</span>
-    </div>`).join('');
 }
 
 // ── TOTALS ──
